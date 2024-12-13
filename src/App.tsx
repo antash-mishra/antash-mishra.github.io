@@ -39,7 +39,7 @@ function App() {
         >
           <h1 className="text-6xl font-bold mb-4">Antash Mishra</h1>
           <h2 className="text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-            Data & Visualization Engineer
+            Software Developer
           </h2>
           <p className="text-xl text-gray-300 mb-8">
             Transforming complex data into beautiful, interactive visualizations and actionable insights
