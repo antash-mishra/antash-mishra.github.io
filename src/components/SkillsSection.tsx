@@ -36,19 +36,13 @@ export default function SkillsSection() {
       icon: <Code2 size={32} />,
       title: "Programming",
       color: "text-blue-400",
-      skills: ["Python", "JavaScript", "TypeScript"]
+      skills: ["Python", "JavaScript", "TypeScript", "Rust"]
     },
     {
-      icon: <Database size={32} />,
-      title: "Data Engineering",
-      color: "text-purple-400",
-      skills: ["SQL/NoSQL", "ETL Pipelines", "Data Warehousing", "Data Modeling"]
-    },
-    {
-      icon: <LineChart size={32} />,
-      title: "Data Visualization",
-      color: "text-indigo-400",
-      skills: ["Power BI", "D3.js", "Plotly", "QuickSight"]
+      icon: <Globe size={32} />,
+      title: "Web Development",
+      color: "text-teal-400",
+      skills: ["Vanilla JS", "React", "React Native", "Next.js", "Flask", "Fast API", "Rust"]
     },
     {
       icon: <Box size={32} />,
@@ -57,23 +51,17 @@ export default function SkillsSection() {
       skills: ["Three.js", "WebGL", "React Three Fiber", "GLSL"]
     },
     {
-      icon: <Cloud size={32} />,
-      title: "Cloud & DevOps",
-      color: "text-sky-400",
-      skills: ["AWS", "Docker", "CI/CD", "Microservices"]
-    },
-    {
       icon: <Brain size={32} />,
       title: "Machine Learning",
       color: "text-violet-400",
       skills: ["PyTorch", "Neural Networks", "Transformers", "NLP(LLM, RAG)", "Stable Diffusion"]
     },
     {
-      icon: <Globe size={32} />,
-      title: "Web Development",
-      color: "text-teal-400",
-      skills: ["React", "React Native", "Next.js", "Flask", "Fast API"]
-    }
+      icon: <LineChart size={32} />,
+      title: "Data Visualization",
+      color: "text-indigo-400",
+      skills: ["Power BI", "D3.js", "Plotly", "QuickSight"]
+    },
   ];
 
   return (

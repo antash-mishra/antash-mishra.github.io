@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Database, Github, Mail, Linkedin, Terminal, Bot, Box } from 'lucide-react';
 import Background from './components/Background';
 import ProjectCard from './components/ProjectCard';
 import SkillsSection from './components/SkillsSection';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
-function App() {
+function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -107,7 +109,7 @@ function App() {
               <Mail className="w-6 h-6" />
               mishraantash34@gmail.com
             </a>
-            <a href="www.linkedin.com/in/antash-mishra-a33450190" className="flex items-center gap-3 text-gray-300 hover:text-white">
+            <a href="https://linkedin.com/in/antash-mishra" className="flex items-center gap-3 text-gray-300 hover:text-white">
               <Linkedin className="w-6 h-6" />
               LinkedIn Profile
             </a>
@@ -119,6 +121,15 @@ function App() {
         </div>
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+    </Routes>
   );
 }
 
