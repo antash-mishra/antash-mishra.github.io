@@ -288,7 +288,7 @@ const PrivacyPolicy: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <span className="font-medium text-slate-700">Email:</span>
-                  <p className="text-blue-600">mishraantash3@gmail.com</p>
+                  <p className="text-blue-600">mishraantash34@gmail.com</p>
                 </div>
                 <div>
                   <span className="font-medium text-slate-700">Developer:</span>
