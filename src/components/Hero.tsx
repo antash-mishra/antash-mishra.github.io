@@ -318,7 +318,7 @@ const Hero: React.FC = () => {
           variants={itemVariants}
           className="font-mono uppercase tracking-eyebrow text-ind-accent text-sm mb-4"
         >
-          Full-Stack Engineer // Real-Time Systems // Graphics
+          Software // Games // Engines // AI Agents
         </motion.p>
 
         <motion.h1
@@ -332,7 +332,7 @@ const Hero: React.FC = () => {
           variants={itemVariants}
           className="text-lg text-ind-text-dim mb-8 max-w-2xl mx-auto leading-relaxed"
         >
-          Building production-ready, real-time products — from LLM voice agents to OpenGL renderers.
+          Ships apps by day, builds game engines and AI agents by night.
         </motion.p>
 
         <motion.div

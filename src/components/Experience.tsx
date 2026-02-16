@@ -19,7 +19,7 @@ const Experience: React.FC = () => {
         'Owned end-to-end delivery of Shodh, a self-serve analytics dashboard for credit policy, product, and model risk teams',
         'Shipped features and APIs for Analytics Central — a microservice platform used by ~10,000 employees — to centralize sales and business analytics',
       ],
-      technologies: ['React', 'Node.js', 'REST APIs', 'Microservices'],
+      technologies: ['React', 'Next.js', 'Node.js', 'Python', 'REST APIs', 'Microservices'],
     },
     {
       id: 2,
