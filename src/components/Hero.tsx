@@ -1,7 +1,9 @@
 import React, { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronDown, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowRight, ChevronDown, Github, Linkedin, Mail } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import { blogPosts } from '../data/blogPosts';
 
 const Hero: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -268,8 +270,8 @@ const Hero: React.FC = () => {
     visible: {
       opacity: 1,
       transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2,
+        delayChildren: 0.2,
+        staggerChildren: 0.15,
       },
     },
   };
@@ -285,8 +287,10 @@ const Hero: React.FC = () => {
     },
   };
 
+  const latestPost = blogPosts[0];
+
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-900">
+    <section className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gray-900 px-6 py-24">
       {/* 3D Procedural Background */}
       <canvas
         ref={canvasRef}
@@ -294,73 +298,54 @@ const Hero: React.FC = () => {
         style={{ mixBlendMode: 'screen' }}
       />
 
+      {/* Dot grid texture overlay */}
+      <div className="absolute inset-0 bg-dot-grid opacity-30 pointer-events-none" />
+
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="container mx-auto px-6 text-center relative z-10"
+        className="max-w-3xl w-full text-center relative z-10"
       >
-        <motion.div
-          variants={itemVariants}
-          className="mb-8"
-        >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="w-32 h-32 mx-auto mb-8 rounded-full bg-ind-accent p-1"
-          >
-            <div className="w-full h-full rounded-full bg-gray-800 flex items-center justify-center text-4xl font-display font-bold text-white">
-              AM
-            </div>
-          </motion.div>
-        </motion.div>
-
+        {/* Eyebrow tagline */}
         <motion.p
           variants={itemVariants}
-          className="font-mono uppercase tracking-eyebrow text-ind-accent text-sm mb-4"
+          className="font-mono uppercase tracking-eyebrow text-ind-accent text-xs mb-6"
         >
           Software // Games // Engines // AI Agents
         </motion.p>
 
-        <motion.h1
-          variants={itemVariants}
-          className="text-hero font-display font-black text-white leading-none mb-6"
-        >
-          Antash Mishra
-        </motion.h1>
-
+        {/* Description with blinking cursor */}
         <motion.p
           variants={itemVariants}
-          className="text-lg text-ind-text-dim mb-8 max-w-2xl mx-auto leading-relaxed"
+          className="text-lg md:text-xl text-ind-text-dim max-w-xl mx-auto mb-8"
         >
           Ships apps by day, builds game engines and AI agents by night.
+          <motion.span
+            animate={{ opacity: [1, 0] }}
+            transition={{ duration: 0.7, repeat: Infinity, repeatType: 'reverse', ease: 'steps(2)' }}
+            className="inline-block w-[2px] h-5 bg-ind-accent ml-0.5 align-middle"
+          />
         </motion.p>
 
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
-        >
-          <motion.a
+        {/* CTA buttons */}
+        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
+          <a
             href="#projects"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 bg-ind-accent text-gray-900 rounded font-semibold uppercase tracking-wider text-sm hover:bg-ind-accent-dim transition-colors duration-300"
+            className="w-full sm:w-auto px-6 py-3 bg-ind-accent text-gray-900 font-mono text-sm uppercase tracking-wider font-bold text-center hover:bg-ind-accent-dim transition-colors"
           >
             View My Work
-          </motion.a>
-          <motion.a
+          </a>
+          <a
             href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 border border-ind-border text-ind-text rounded font-semibold uppercase tracking-wider text-sm hover:border-ind-accent hover:text-ind-accent transition-colors duration-300"
+            className="w-full sm:w-auto px-6 py-3 border border-ind-border text-ind-text font-mono text-sm uppercase tracking-wider text-center hover:border-ind-accent hover:text-ind-accent transition-colors"
           >
-            Get In Touch
-          </motion.a>
+            Get in Touch
+          </a>
         </motion.div>
 
-        <motion.div
-          variants={itemVariants}
-          className="flex justify-center space-x-4 mb-0"
-        >
+        {/* Social links — centered */}
+        <motion.div variants={itemVariants} className="flex items-center justify-center gap-3 mb-10">
           {[
             { icon: Github, href: 'https://github.com/antash-mishra', label: 'GitHub' },
             { icon: Linkedin, href: 'https://linkedin.com/in/antash-mishra', label: 'LinkedIn' },
@@ -373,21 +358,49 @@ const Hero: React.FC = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.2, y: -2 }}
               whileTap={{ scale: 0.9 }}
-              className="p-3 bg-ind-surface border border-ind-border rounded text-ind-text-dim hover:text-ind-accent hover:border-ind-accent transition-colors duration-300"
+              className="p-2 bg-ind-surface border border-ind-border rounded-sm text-ind-text-dim hover:text-ind-accent hover:border-ind-accent transition-colors duration-300"
             >
-              <Icon size={24} />
+              <Icon size={16} />
             </motion.a>
           ))}
         </motion.div>
+
+        {/* Compact blog update strip */}
+        {latestPost && (
+          <motion.div variants={itemVariants}>
+            <Link to={`/blog/${latestPost.slug}`} className="group block max-w-lg mx-auto">
+              <div className="bento-card overflow-hidden !bg-ind-surface/60 backdrop-blur-md">
+                {/* Compact title bar */}
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-ind-surface-alt/80 border-b border-ind-border">
+                  <div className="flex gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[#FF5F56]/60" />
+                    <span className="w-2 h-2 rounded-full bg-[#FFBD2E]/60" />
+                    <span className="w-2 h-2 rounded-full bg-[#27C93F]/60" />
+                  </div>
+                  <span className="font-mono text-[10px] text-ind-text-dim">~/dev-log/latest.md</span>
+                  <span className="font-mono text-[10px] text-ind-text-dim ml-auto">{latestPost.readingTime}</span>
+                </div>
+                {/* Single-line content */}
+                <div className="px-4 py-3 flex items-center gap-3">
+                  <span className="font-mono text-sm text-ind-accent shrink-0">#</span>
+                  <span className="font-display text-sm font-semibold text-white group-hover:text-ind-accent transition-colors truncate">
+                    {latestPost.title}
+                  </span>
+                  <ArrowRight size={14} className="text-ind-accent shrink-0 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+        )}
       </motion.div>
 
       {/* Animated scroll indicator */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none z-0"
+        className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 pointer-events-none z-10"
       >
-        <ChevronDown size={28} className="text-ind-text-dim" />
+        <ChevronDown size={24} className="text-ind-text-dim/60" />
       </motion.div>
     </section>
   );
