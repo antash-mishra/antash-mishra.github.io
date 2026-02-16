@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
     const vertexShaderSource = `
       attribute vec2 a_position;
       varying vec2 v_uv;
-      
+
       void main() {
         v_uv = a_position * 0.5 + 0.5;
         gl_Position = vec4(a_position, 0.0, 1.0);
@@ -34,17 +34,16 @@ const Hero: React.FC = () => {
     // Fragment shader with procedural noise and flowing animation
     const fragmentShaderSource = `
       precision mediump float;
-      
+
       uniform float u_time;
       uniform vec2 u_resolution;
-      uniform float u_dark; // 0.0 = light, 1.0 = dark
+      uniform float u_dark;
       varying vec2 v_uv;
-      
-      // Improved noise function
+
       vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
       vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
       vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
-      
+
       float snoise(vec2 v) {
         const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
         vec2 i = floor(v + dot(v, C.yy));
@@ -67,89 +66,76 @@ const Hero: React.FC = () => {
         g.yz = a0.yz * x12.xz + h.yz * x12.yw;
         return 130.0 * dot(m, g);
       }
-      
-      // Fractal Brownian Motion
+
       float fbm(vec2 p, float time) {
         float value = 0.0;
         float amplitude = 0.5;
         float frequency = 1.0;
-        
+
         for(int i = 0; i < 6; i++) {
           value += amplitude * snoise(p * frequency + time * 0.1);
           amplitude *= 0.5;
           frequency *= 2.0;
           p = mat2(1.6, 1.2, -1.2, 1.6) * p;
         }
-        
+
         return value;
       }
-      
-      // Domain warping for more organic flow
+
       vec2 domainWarp(vec2 p, float time) {
         vec2 q = vec2(
           fbm(p + vec2(0.0, 0.0), time),
           fbm(p + vec2(5.2, 1.3), time)
         );
-        
+
         vec2 r = vec2(
           fbm(p + 4.0 * q + vec2(1.7, 9.2), time),
           fbm(p + 4.0 * q + vec2(8.3, 2.8), time)
         );
-        
+
         return fbm(p + 4.0 * r, time) * vec2(1.0, 1.0);
       }
-      
+
       void main() {
         vec2 uv = (gl_FragCoord.xy * 2.0 - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
         float time = u_time * 0.15;
-        
-        // Create flowing, organic patterns
+
         vec2 warp = domainWarp(uv * 2.0, time);
         float noise1 = fbm(uv * 3.0 + warp, time);
         float noise2 = fbm(uv * 1.5 + warp * 0.5, time + 100.0);
-        
-        // Layer multiple noise patterns for depth
+
         float pattern1 = sin(noise1 * 3.14159 + time) * 0.5 + 0.5;
         float pattern2 = sin(noise2 * 2.0 + time * 0.7) * 0.5 + 0.5;
-        
-        // Create flowing gradients
+
         float flow = fbm(uv + vec2(sin(time * 0.3), cos(time * 0.2)), time);
-        
-        // Light-mode Apple-style palette
-        vec3 l1 = vec3(0.96, 0.96, 0.97); // Apple background (#f5f5f7)
-        vec3 l2 = vec3(0.93, 0.93, 0.95); // Slightly darker light grey
-        vec3 l3 = vec3(0.35, 0.78, 0.98); // Accent blue (#5ac8fa)
 
-        // Dark-mode Apple-style neutral palette
-        vec3 d1 = vec3(0.11, 0.11, 0.12); // Near-black (#1d1d1f)
-        vec3 d2 = vec3(0.17, 0.17, 0.18); // Dark grey (#2c2c2e)
-        vec3 d3 = vec3(0.0, 0.52, 1.0);   // Accent blue (#0a84ff)
+        // Dark industrial palette
+        vec3 d1 = vec3(0.11, 0.11, 0.12);
+        vec3 d2 = vec3(0.17, 0.17, 0.18);
+        // Amber accent (E8A035)
+        vec3 d3 = vec3(0.91, 0.63, 0.21);
 
-        vec3 color1 = mix(l1, d1, u_dark);
-        vec3 color2 = mix(l2, d2, u_dark);
-        vec3 color3 = mix(l3, d3, u_dark);
-        
+        vec3 color1 = d1;
+        vec3 color2 = d2;
+        vec3 color3 = d3;
+
         vec3 finalColor = mix(
           mix(color3, color1, pattern1),
           color2,
           pattern2 * 0.7
         );
-        
-        // Add flowing highlights
+
         float highlight = smoothstep(0.3, 0.7, flow + 0.3);
-        // Use accent blue for highlights in both themes but modulated by u_dark
-        vec3 accent = mix(vec3(0.35, 0.78, 0.98), vec3(0.0, 0.52, 1.0), u_dark);
+        vec3 accent = vec3(0.91, 0.63, 0.21);
         finalColor += accent * highlight * 0.25;
-        
-        // Subtle vignette for depth
+
         float vignette = 1.0 - length(uv * 0.5);
         vignette = smoothstep(0.3, 1.0, vignette);
-        
+
         finalColor *= vignette;
-        
-        // Fade edges for seamless blending
+
         float edgeFade = smoothstep(0.0, 0.3, min(v_uv.x, min(v_uv.y, min(1.0 - v_uv.x, 1.0 - v_uv.y))));
-        
+
         gl_FragColor = vec4(finalColor * 0.6 * edgeFade, 0.8 * edgeFade);
       }
     `;
@@ -157,45 +143,44 @@ const Hero: React.FC = () => {
     function createShader(gl: WebGLRenderingContext, type: number, source: string): WebGLShader | null {
       const shader = gl.createShader(type);
       if (!shader) return null;
-      
+
       gl.shaderSource(shader, source);
       gl.compileShader(shader);
-      
+
       if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
         console.error('Shader compile error:', gl.getShaderInfoLog(shader));
         gl.deleteShader(shader);
         return null;
       }
-      
+
       return shader;
     }
 
     function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader): WebGLProgram | null {
       const program = gl.createProgram();
       if (!program) return null;
-      
+
       gl.attachShader(program, vertexShader);
       gl.attachShader(program, fragmentShader);
       gl.linkProgram(program);
-      
+
       if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
         console.error('Program link error:', gl.getProgramInfoLog(program));
         gl.deleteProgram(program);
         return null;
       }
-      
+
       return program;
     }
 
     const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
     const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-    
+
     if (!vertexShader || !fragmentShader) return;
-    
+
     const program = createProgram(gl, vertexShader, fragmentShader);
     if (!program) return;
 
-    // Set up geometry
     const positions = new Float32Array([
       -1, -1,
        1, -1,
@@ -216,7 +201,7 @@ const Hero: React.FC = () => {
       if (!canvas || !gl) return;
       const displayWidth = canvas.clientWidth;
       const displayHeight = canvas.clientHeight;
-      
+
       if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
         canvas.width = displayWidth;
         canvas.height = displayHeight;
@@ -227,27 +212,27 @@ const Hero: React.FC = () => {
     function render(time: number) {
       if (isDestroyed || !canvas || !gl || !program || !positionBuffer) return;
       resize();
-      
+
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
-      
+
       gl.useProgram(program);
-      
+
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
       gl.enableVertexAttribArray(positionLocation);
       gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-      
+
       gl.uniform1f(timeLocation, time * 0.001);
       gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
       if (darkModeLocation) {
-        gl.uniform1f(darkModeLocation, isDark ? 1.0 : 0.0);
+        gl.uniform1f(darkModeLocation, 1.0);
       }
-      
+
       gl.enable(gl.BLEND);
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      
+
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      
+
       if (!isDestroyed) {
         animationId = requestAnimationFrame(render);
       }
@@ -267,8 +252,7 @@ const Hero: React.FC = () => {
         cancelAnimationFrame(animationId);
       }
       window.removeEventListener('resize', handleResize);
-      
-      // Cleanup WebGL resources in proper order
+
       if (gl) {
         gl.useProgram(null);
         if (positionBuffer) gl.deleteBuffer(positionBuffer);
@@ -302,16 +286,13 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-apple-bg dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-900">
       {/* 3D Procedural Background */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
         style={{ mixBlendMode: 'screen' }}
       />
-
-      {/* Fallback overlay visible only in dark mode */}
-      <div className="absolute inset-0 hidden dark:block bg-gradient-to-br from-blue-900/20 via-purple-900/10 to-gray-900 opacity-50" />
 
       <motion.div
         variants={containerVariants}
@@ -325,33 +306,33 @@ const Hero: React.FC = () => {
         >
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="w-32 h-32 mx-auto mb-8 rounded-full bg-apple-blue p-1 shadow-2xl"
+            className="w-32 h-32 mx-auto mb-8 rounded-full bg-ind-accent p-1"
           >
-            <div className="w-full h-full rounded-full bg-gray-800 flex items-center justify-center text-4xl font-bold text-white">
+            <div className="w-full h-full rounded-full bg-gray-800 flex items-center justify-center text-4xl font-display font-bold text-white">
               AM
             </div>
           </motion.div>
         </motion.div>
 
+        <motion.p
+          variants={itemVariants}
+          className="font-mono uppercase tracking-eyebrow text-ind-accent text-sm mb-4"
+        >
+          Full-Stack Engineer // Real-Time Systems // Graphics
+        </motion.p>
+
         <motion.h1
           variants={itemVariants}
-          className="text-5xl md:text-7xl font-bold mb-6 text-apple-text dark:text-white"
+          className="text-hero font-display font-black text-white leading-none mb-6"
         >
           Antash Mishra
         </motion.h1>
 
         <motion.p
           variants={itemVariants}
-          className="text-xl md:text-2xl text-apple-gray dark:text-gray-200 mb-4"
+          className="text-lg text-ind-text-dim mb-8 max-w-2xl mx-auto leading-relaxed"
         >
-          Full-Stack Developer & 3D Graphics Enthusiast
-        </motion.p>
-
-        <motion.p
-          variants={itemVariants}
-          className="text-lg text-apple-gray dark:text-gray-300 mb-8 max-w-2xl mx-auto"
-        >
-          I'm a developer who loves coding. Powered by caffeine & curiosity.
+          Building production-ready, real-time products — from LLM voice agents to OpenGL renderers.
         </motion.p>
 
         <motion.div
@@ -362,7 +343,7 @@ const Hero: React.FC = () => {
             href="#projects"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 bg-white text-apple-text rounded-full font-semibold shadow-lg hover:shadow-xl transition-shadow duration-300 dark:bg-gray-200 dark:text-gray-900"
+            className="px-8 py-3 bg-ind-accent text-gray-900 rounded font-semibold uppercase tracking-wider text-sm hover:bg-ind-accent-dim transition-colors duration-300"
           >
             View My Work
           </motion.a>
@@ -370,7 +351,7 @@ const Hero: React.FC = () => {
             href="#contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-apple-text transition-colors duration-300 dark:border-gray-200 dark:hover:bg-gray-200 dark:hover:text-gray-900"
+            className="px-8 py-3 border border-ind-border text-ind-text rounded font-semibold uppercase tracking-wider text-sm hover:border-ind-accent hover:text-ind-accent transition-colors duration-300"
           >
             Get In Touch
           </motion.a>
@@ -378,7 +359,7 @@ const Hero: React.FC = () => {
 
         <motion.div
           variants={itemVariants}
-          className="flex justify-center space-x-6 mb-12"
+          className="flex justify-center space-x-4 mb-0"
         >
           {[
             { icon: Github, href: 'https://github.com/antash-mishra', label: 'GitHub' },
@@ -392,7 +373,7 @@ const Hero: React.FC = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.2, y: -2 }}
               whileTap={{ scale: 0.9 }}
-              className="p-3 bg-white/60 dark:bg-gray-800/50 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 text-gray-700 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400"
+              className="p-3 bg-ind-surface border border-ind-border rounded text-ind-text-dim hover:text-ind-accent hover:border-ind-accent transition-colors duration-300"
             >
               <Icon size={24} />
             </motion.a>
@@ -400,13 +381,13 @@ const Hero: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      {/* Animated scroll indicator pinned to very bottom, beneath social icons */}
+      {/* Animated scroll indicator */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none z-0"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none z-0"
       >
-        <ChevronDown size={28} className="text-gray-400 dark:text-gray-500" />
+        <ChevronDown size={28} className="text-ind-text-dim" />
       </motion.div>
     </section>
   );

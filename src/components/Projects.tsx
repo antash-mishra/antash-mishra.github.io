@@ -1,26 +1,33 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Filter } from 'lucide-react';
+import { Github } from 'lucide-react';
 
 const Projects: React.FC = () => {
   const [filter, setFilter] = useState('all');
 
   const projects = [
     {
-      id: 1,
-      title: 'Tetris Game',
-      description: 'Classic Tetris game with modern web technologies. Features smooth animations and responsive design.',
-      image: '/tetris.png',
-      category: 'game',
-      technologies: ['JavaScript', 'Three.js', 'React'],
-      github: 'https://github.com/antash-mishra/Tetris',
-      demo: 'https://tetrisd.fly.dev/',
+      id: 7,
+      title: 'Vaani',
+      description: 'Real-time voice AI agent platform with sub-500 ms latency. Integrates WebRTC, TTS/STT pipelines, and LLM orchestration for telephony and conversational AI.',
+      category: 'fullstack',
+      technologies: ['WebRTC', 'FastAPI', 'Next.js', 'LLMs', 'TTS/STT'],
+      github: 'https://github.com/antash-mishra',
+      demo: 'https://agents.corrodedlabs.com',
+    },
+    {
+      id: 6,
+      title: 'Engine',
+      description: 'Custom OpenGL real-time graphics engine with deferred and clustered deferred shading, PBR, IBL, shadow mapping, HDR post-processing, SSAO, and glTF scene support. Handles 10,000+ dynamic lights.',
+      category: '3d',
+      technologies: ['C++', 'OpenGL', 'GLSL', 'Vulkan'],
+      github: 'https://github.com/antash-mishra/engine',
+      demo: 'https://github.com/antash-mishra/engine',
     },
     {
       id: 2,
       title: 'Invaders 1999',
       description: 'Retro 2D shooter built from scratch in modern C++ & OpenGL ES with custom rendering pipeline, HDR bloom.',
-      image: '/invaders.jpeg',
       category: 'game',
       technologies: ['C++', 'OpenGL ES', 'GLSL', 'Android Studio'],
       github: 'https://github.com/antash-mishra/invaders',
@@ -30,7 +37,6 @@ const Projects: React.FC = () => {
       id: 3,
       title: 'Open Tunnel',
       description: 'A ngrok-like tunnel for secure local development. It is a simple and easy to use tunnel for local development.',
-      image: '/tunnel.png',
       category: 'fullstack',
       technologies: ['Node.js', 'WebSocket', 'Express', 'TypeScript'],
       github: 'https://github.com/antash-mishra/open-tunnel',
@@ -40,9 +46,8 @@ const Projects: React.FC = () => {
       id: 4,
       title: 'HuskyAI',
       description: 'Developed a news aggregator which develops user feed based on the user\'s preferences.',
-      image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800',
       category: 'fullstack',
-      technologies: ['Next.js', 'FastAPI', ' LangChain', 'Celery', 'RAG'],
+      technologies: ['Next.js', 'FastAPI', 'LangChain', 'Celery', 'RAG'],
       github: 'https://github.com/antash-mishra/huskyAI',
       demo: '#',
     },
@@ -50,139 +55,115 @@ const Projects: React.FC = () => {
       id: 5,
       title: 'Mini Diffuser',
       description: 'Built a diffusion model from scratch. The model is able to generate images of flowers.',
-      image: '/diffuser.png',
       category: 'ai',
       technologies: ['Python', 'PyTorch', 'CUDA', 'NumPy'],
       github: 'https://github.com/antash-mishra/Mini-Diffuser',
       demo: 'https://github.com/antash-mishra/Mini-Diffuser',
-    }
+    },
   ];
 
   const categories = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'fullstack', label: 'Full-Stack' },
-    { id: 'game', label: 'Games' },
-    // { id: '3d', label: '3D Graphics' },
-    { id: 'ai', label: 'AI/ML' },
+    { id: 'all', label: 'all' },
+    { id: 'game', label: 'games' },
+    { id: '3d', label: '3d graphics' },
+    { id: 'fullstack', label: 'full-stack' },
+    { id: 'ai', label: 'ai/ml' },
   ];
 
-  const filteredProjects = filter === 'all' 
-    ? projects 
+  const filteredProjects = filter === 'all'
+    ? projects
     : projects.filter(project => project.category === filter);
 
   return (
-    <section id="projects" className="py-20 bg-gray-800">
+    <section id="projects" className="py-20 bg-gray-900 bg-dot-grid bg-[size:24px_24px]">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+          <span className="section-eyebrow">03 // Projects</span>
+          <h2 className="section-heading">
             Featured Projects
           </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            A showcase of my technical expertise across web development, 3D graphics, and innovative solutions.
-          </p>
         </motion.div>
 
-        {/* Filter Buttons */}
+        {/* Terminal-style Filter Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
+          className="flex items-center gap-1 mb-12 border-b border-ind-border/30 overflow-x-auto"
         >
-          {categories.map((category) => (
-            <motion.button
-              key={category.id}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setFilter(category.id)}
-                              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                filter === category.id
-                  ? 'bg-apple-blue text-white shadow-lg'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              <Filter size={16} className="inline mr-2" />
-              {category.label}
-            </motion.button>
+          <span className="font-mono text-sm text-ind-accent mr-2 flex-shrink-0">&gt;</span>
+          {categories.map((category, index) => (
+            <React.Fragment key={category.id}>
+              {index > 0 && (
+                <span className="font-mono text-ind-text-dim/30 flex-shrink-0">|</span>
+              )}
+              <button
+                onClick={() => setFilter(category.id)}
+                className={filter === category.id ? 'terminal-tab-active flex-shrink-0' : 'terminal-tab flex-shrink-0'}
+              >
+                {category.label}
+              </button>
+            </React.Fragment>
           ))}
         </motion.div>
 
-        {/* Projects Grid */}
-        <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Uniform Grid */}
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <AnimatePresence>
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-                </div>
-                
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3 text-white">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-300 mb-4 text-sm leading-relaxed">
-                    {project.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 bg-gray-600 text-apple-blue text-xs rounded-full font-mono"
+            {filteredProjects.map((project, index) => {
+              const displayIndex = String(index + 1).padStart(2, '0');
+
+              return (
+                <motion.div
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                >
+                  <div className="bento-card p-6 flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="project-index">{displayIndex}</span>
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-ind-text-dim/50">{project.category}</span>
+                    </div>
+                    <h3 className="mono-title text-lg mb-3">{project.title}</h3>
+                    <p className="text-ind-text-dim text-sm leading-relaxed mb-4 flex-grow">{project.description}</p>
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {project.technologies.map((tech) => (
+                        <span key={tech} className="tech-tag text-[10px] px-2 py-0.5">{tech}</span>
+                      ))}
+                    </div>
+                    <div className="flex gap-4 font-mono text-xs mt-auto">
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-ind-text-dim hover:text-ind-accent transition-colors flex items-center gap-1"
                       >
-                        {tech}
-                      </span>
-                    ))}
+                        <Github size={12} />
+                        source
+                      </a>
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-ind-text-dim hover:text-ind-accent transition-colors"
+                      >
+                        demo
+                      </a>
+                    </div>
                   </div>
-                  
-                  <div className="flex gap-4">
-                    <motion.a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-gray-300 rounded-lg hover:bg-gray-500 transition-colors duration-200"
-                    >
-                      <Github size={16} />
-                      Code
-                    </motion.a>
-                    <motion.a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-4 py-2 bg-apple-blue text-white rounded-lg hover:shadow-lg transition-shadow duration-200"
-                    >
-                      <ExternalLink size={16} />
-                      Demo
-                    </motion.a>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </AnimatePresence>
         </motion.div>
       </div>

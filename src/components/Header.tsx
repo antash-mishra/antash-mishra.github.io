@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 const Header: React.FC = () => {
@@ -9,12 +9,11 @@ const Header: React.FC = () => {
   const { } = useTheme();
 
   const navItems = [
-    { href: '#', label: 'About' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#projects', label: 'Projects' },
-    { href: '#demoscene', label: 'Demoscene' },
-    { href: '#experience', label: 'Experience' },
-    { href: '#contact', label: 'Contact' },
+    { href: '/#', label: 'About' },
+    { href: '/#experience', label: 'Experience' },
+    { href: '/#projects', label: 'Projects' },
+    { href: '/#blog', label: 'Blog' },
+    { href: '/#contact', label: 'Contact' },
   ];
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const Header: React.FC = () => {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-apple-bg/90 backdrop-blur-md shadow-lg dark:bg-gray-900/90'
+          ? 'bg-gray-900/90 backdrop-blur-md border-b border-ind-border'
           : 'bg-transparent'
       }`}
     >
@@ -40,7 +39,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between">
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold text-white"
+            className="text-2xl font-display font-bold tracking-tight text-white"
           >
             Antash Mishra
           </motion.div>
@@ -53,12 +52,11 @@ const Header: React.FC = () => {
                 href={item.href}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="text-apple-gray dark:text-gray-300 hover:text-apple-text dark:hover:text-apple-blue transition-colors duration-200"
+                className="text-ind-text-dim hover:text-ind-accent uppercase tracking-wider text-sm font-medium transition-colors duration-200"
               >
                 {item.label}
               </motion.a>
             ))}
-
           </div>
 
           {/* Mobile Menu Button */}
@@ -67,7 +65,7 @@ const Header: React.FC = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-full bg-gray-700 text-gray-300"
+              className="p-2 rounded bg-ind-surface border border-ind-border text-gray-300"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </motion.button>
@@ -80,14 +78,14 @@ const Header: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden mt-4 py-4 bg-gray-800 rounded-lg shadow-lg"
+            className="md:hidden mt-4 py-4 bg-ind-surface border border-ind-border rounded-lg"
           >
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="block px-4 py-2 text-apple-gray dark:text-gray-300 hover:text-apple-text dark:hover:text-apple-blue hover:bg-gray-700 dark:hover:bg-gray-700 transition-colors duration-200"
+                className="block px-4 py-2 text-ind-text-dim hover:text-ind-accent hover:bg-gray-800 uppercase tracking-wider text-sm transition-colors duration-200"
               >
                 {item.label}
               </a>

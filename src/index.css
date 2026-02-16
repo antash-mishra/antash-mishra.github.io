@@ -2,11 +2,143 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Force dark mode globally */
-html {
-  color-scheme: dark;
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-gray-900 text-ind-text font-sans;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Darker Grotesque", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  ::selection {
+    @apply bg-ind-accent/30 text-white;
+  }
 }
 
-body {
-  @apply bg-gray-900 text-white;
+@layer components {
+  .section-eyebrow {
+    @apply font-mono text-xs uppercase tracking-eyebrow text-ind-accent block mb-4;
+  }
+
+  .section-heading {
+    @apply font-display text-section font-bold text-white;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-ind-text-dim max-w-2xl leading-relaxed;
+  }
+
+  .card-surface {
+    @apply bg-ind-surface border border-ind-border rounded-sm;
+  }
+
+  .tech-tag {
+    @apply font-mono text-xs uppercase tracking-wider px-3 py-1 border border-ind-accent/30 bg-ind-accent/10 text-ind-accent rounded-none;
+  }
+
+  .ind-divider {
+    @apply border-t border-ind-border;
+  }
+
+  /* Terminal-style filter tabs */
+  .terminal-tab {
+    @apply font-mono text-sm text-ind-text-dim px-3 py-2 border-b-2 border-transparent transition-colors duration-200 hover:text-ind-accent cursor-pointer;
+  }
+
+  .terminal-tab-active {
+    @apply font-mono text-sm text-ind-accent px-3 py-2 border-b-2 border-ind-accent cursor-pointer;
+  }
+
+  /* Bento card with amber glow hover */
+  .bento-card {
+    @apply bg-ind-surface border border-ind-border rounded-sm transition-all duration-300;
+  }
+
+  .bento-card:hover {
+    @apply border-ind-accent/40;
+    box-shadow: 0 0 20px rgba(232, 160, 53, 0.15);
+  }
+
+  /* Section divider — thin amber gradient line */
+  .section-divider {
+    @apply mx-auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232, 160, 53, 0.4), transparent);
+  }
+
+  /* Monospace project index number */
+  .project-index {
+    @apply font-mono text-xs text-ind-accent/60;
+  }
+
+  /* Experience row band */
+  .exp-row {
+    @apply border-b border-ind-border/50 py-5 px-4 transition-colors duration-200 cursor-pointer;
+  }
+
+  .exp-row:hover {
+    @apply bg-ind-surface/50;
+  }
+
+  /* CRT scanline overlay */
+  .crt-overlay {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.15) 2px,
+      rgba(0, 0, 0, 0.15) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* Monospace title */
+  .mono-title {
+    @apply font-mono text-white font-semibold;
+  }
+
+  /* Blog prose overrides */
+  .prose {
+    --tw-prose-body: theme('colors.ind-text');
+    --tw-prose-headings: white;
+    --tw-prose-links: theme('colors.ind-accent');
+    --tw-prose-bold: white;
+    --tw-prose-counters: theme('colors.ind-text-dim');
+    --tw-prose-bullets: theme('colors.ind-accent / 0.5');
+    --tw-prose-hr: theme('colors.ind-border');
+    --tw-prose-quotes: theme('colors.ind-text-dim');
+    --tw-prose-quote-borders: theme('colors.ind-accent / 0.4');
+    --tw-prose-th-borders: theme('colors.ind-border');
+    --tw-prose-td-borders: theme('colors.ind-border');
+  }
+
+  .prose code {
+    @apply font-mono text-ind-accent bg-ind-surface px-1.5 py-0.5 text-sm border border-ind-border rounded-none;
+  }
+
+  .prose code::before,
+  .prose code::after {
+    content: none;
+  }
+
+  .prose pre {
+    @apply bg-ind-surface-alt border border-ind-border rounded-none;
+  }
+
+  .prose pre code {
+    @apply border-none bg-transparent p-0;
+  }
+
+  .prose table {
+    @apply font-mono text-sm;
+  }
+
+  .prose th {
+    @apply text-ind-accent;
+  }
 }

@@ -1,156 +1,197 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Calendar, MapPin, Briefcase } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MapPin, ChevronRight } from 'lucide-react';
 
 const Experience: React.FC = () => {
+  const [expandedId, setExpandedId] = useState<number | null>(null);
+
   const experiences = [
     {
       id: 1,
+      title: 'Full Stack Developer (Consultant)',
+      company: 'Piramal Finance',
+      location: 'Remote',
+      period: 'Aug 2025 – Present',
+      isPresent: true,
+      description:
+        'Owning delivery of Shodh (self-serve analytics dashboard) and shipping features for Analytics Central (~10,000 employees).',
+      achievements: [
+        'Owned end-to-end delivery of Shodh, a self-serve analytics dashboard for credit policy, product, and model risk teams',
+        'Shipped features and APIs for Analytics Central — a microservice platform used by ~10,000 employees — to centralize sales and business analytics',
+      ],
+      technologies: ['React', 'Node.js', 'REST APIs', 'Microservices'],
+    },
+    {
+      id: 2,
+      title: 'Full Stack Developer',
+      company: 'Freelance',
+      location: 'Remote',
+      period: 'Nov 2024 – Aug 2025',
+      isPresent: false,
+      description:
+        'Launched Vaani AI agent platform + built event app.',
+      achievements: [
+        'Launched Vaani, a self-serve AI agent platform for voice and messaging across phone, WhatsApp, and Instagram, supporting outbound campaigns and two-way conversations',
+        'Architected a real-time voice AI stack with WebRTC, LLM orchestration, tool-calling, multilingual routing, vector retrieval, and a speech pipeline (STT, TTS, VAD, turn detection)',
+        'Integrated telephony operations with SIP routing, call recording, transcript storage, and SQLite-backed analytics',
+        'Shipped a full-stack admin dashboard to create agents, launch bulk campaigns, and monitor conversation metrics',
+        'Built a React Native event app (Expo, TypeScript) with event discovery, WebSocket chat, push notifications, and a Go + SQLite backend',
+      ],
+      technologies: [
+        'WebRTC',
+        'FastAPI',
+        'Next.js',
+        'React Native',
+        'Go',
+        'LLMs',
+        'TTS/STT',
+        'Docker',
+      ],
+    },
+    {
+      id: 3,
       title: 'Data Engineer',
       company: 'Piramal Finance',
       location: 'Bengaluru, India',
-      period: 'Jun 2022 - Dec 2024',
+      period: 'Jun 2022 – Dec 2024',
+      isPresent: false,
       description:
-        'Built data platforms, dashboards, and mobile visualisation tools to drive data-informed decisions across the organization.',
+        'Built centralized data marts, dashboards, and internal web tools.',
       achievements: [
-        'Developed a centralized data mart for partners, improving analysis and reporting efficiency',
-        'Created a React Native visualisation library that brings BI insights to mobile users',
-        'Authored interactive dashboards and web articles with D3.js, Chart.js and Deneb, boosting senior-leadership engagement',
+        'Built centralized partner data marts to improve reporting and decision-making',
+        'Developed dashboards and internal web tools for senior leadership visibility',
+        'Contributed to React Native visualization libraries for mobile analytics',
       ],
       technologies: [
         'Python',
         'React Native',
         'D3.js',
-        'Chart.js',
-        'Deneb',
         'Power BI',
         'Snowflake',
         'AWS S3',
       ],
     },
-    {
-      id: 2,
-      title: 'Freelance Full-Stack Developer',
-      company: 'Self-Employed',
-      location: 'Remote',
-      period: 'May 2024 – Present',
-      description:
-        'Working with clients and personal initiatives to deliver end-to-end web and AI solutions, blending product vision with hands-on engineering.',
-      achievements: [
-        'Designed and implemented "Vaani", a multilingual voice-assistant ecosystem featuring real-time phone and web interfaces and sub-500 ms latency through optimised TTS/STT pipelines',
-        'Built supporting micro-services and dashboards with FastAPI, Next.js and Rust, enabling scalable deployment and monitoring'
-      ],
-      technologies: [
-        'FastAPI',
-        'Next.js',
-        'WebSockets',
-        'LLMs',
-        'TTS/STT',
-        'Docker',
-        'AWS',
-      ],
-    },
-    // Further professional experiences can be added here
   ];
 
+  const maxVisibleTags = 3;
+
   return (
-    <section id="experience" className="py-20 bg-apple-bg dark:bg-gray-800">
+    <section id="experience" className="py-20 bg-gray-900">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-            Professional Experience
+          <span className="section-eyebrow">02 // Experience</span>
+          <h2 className="section-heading">
+            Changelog
           </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            A journey through diverse roles that shaped my expertise in full-stack development and creative technologies.
-          </p>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto">
-          {experiences.map((experience, index) => (
-            <motion.div
-              key={experience.id}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="relative mb-12 last:mb-0"
-            >
-              {/* Timeline Line */}
-              {index < experiences.length - 1 && (
-                <div className="absolute left-8 top-16 w-0.5 h-32 bg-gradient-to-b from-blue-500 to-purple-600 hidden md:block" />
-              )}
+        <div className="max-w-5xl">
+          {experiences.map((experience, index) => {
+            const isExpanded = expandedId === experience.id;
+            const visibleTechs = experience.technologies.slice(0, maxVisibleTags);
+            const overflowCount = Math.max(0, experience.technologies.length - maxVisibleTags);
 
-              <div className="flex flex-col md:flex-row gap-8">
-                {/* Timeline Dot */}
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
-                    <Briefcase size={24} className="text-white" />
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 bg-white dark:bg-gray-700 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2 sm:mb-0">
-                      {experience.title}
-                    </h3>
-                    <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-                      <div className="flex items-center gap-1">
-                        <Calendar size={16} />
-                        {experience.period}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <MapPin size={16} />
-                        {experience.location}
-                      </div>
+            return (
+              <motion.div
+                key={experience.id}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+              >
+                <div
+                  className={`exp-row ${experience.isPresent ? 'border-l-2 border-l-ind-accent' : ''}`}
+                  onClick={() => setExpandedId(isExpanded ? null : experience.id)}
+                >
+                  {/* 4-column grid row */}
+                  <div className="grid grid-cols-1 md:grid-cols-[180px_1fr_auto_24px] gap-2 md:gap-6 items-start">
+                    {/* Left: period */}
+                    <div className="font-mono text-sm text-ind-text-dim flex items-center gap-2">
+                      {experience.isPresent && (
+                        <span className="text-[10px] uppercase tracking-wider bg-ind-accent text-gray-900 px-1.5 py-0.5 font-bold">
+                          NOW
+                        </span>
+                      )}
+                      <span className="text-xs">{experience.period}</span>
                     </div>
-                  </div>
 
-                  <h4 className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-4">
-                    {experience.company}
-                  </h4>
+                    {/* Center: title @ company */}
+                    <div className="mono-title text-sm md:text-base">
+                      {experience.title}{' '}
+                      <span className="text-ind-accent">@</span>{' '}
+                      <span className="text-ind-text-dim font-normal">{experience.company}</span>
+                    </div>
 
-                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                    {experience.description}
-                  </p>
-
-                  <div className="mb-6">
-                    <h5 className="font-semibold text-gray-800 dark:text-white mb-3">
-                      Key Achievements:
-                    </h5>
-                    <ul className="space-y-2">
-                      {experience.achievements.map((achievement, achievementIndex) => (
-                        <li
-                          key={achievementIndex}
-                          className="flex items-start gap-2 text-gray-600 dark:text-gray-300"
-                        >
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                          {achievement}
-                        </li>
+                    {/* Right: tech tags */}
+                    <div className="flex gap-1.5 flex-wrap">
+                      {visibleTechs.map((tech) => (
+                        <span key={tech} className="tech-tag text-[10px] px-2 py-0.5">{tech}</span>
                       ))}
-                    </ul>
-                  </div>
+                      {overflowCount > 0 && (
+                        <span className="font-mono text-[10px] text-ind-text-dim px-2 py-0.5">
+                          +{overflowCount}
+                        </span>
+                      )}
+                    </div>
 
-                  <div className="flex flex-wrap gap-2">
-                    {experience.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm rounded-full font-mono"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                    {/* Chevron expand indicator */}
+                    <motion.span
+                      animate={{ rotate: isExpanded ? 90 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-ind-text-dim ml-auto flex-shrink-0 hidden md:block"
+                    >
+                      <ChevronRight size={16} />
+                    </motion.span>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+                {/* Expanded content */}
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 py-6 bg-ind-surface/30 border-b border-ind-border/30">
+                        <p className="text-ind-text-dim text-sm leading-relaxed mb-4 max-w-3xl">
+                          {experience.description}
+                        </p>
+
+                        <ul className="space-y-1.5 mb-4">
+                          {experience.achievements.map((achievement, i) => (
+                            <li key={i} className="flex items-start gap-2 text-sm text-ind-text-dim">
+                              <span className="text-ind-accent font-mono flex-shrink-0">+</span>
+                              {achievement}
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="flex flex-wrap gap-1.5 mb-3">
+                          {experience.technologies.map((tech) => (
+                            <span key={tech} className="tech-tag text-[10px] px-2 py-0.5">{tech}</span>
+                          ))}
+                        </div>
+
+                        <div className="flex items-center gap-1 font-mono text-xs text-ind-text-dim">
+                          <MapPin size={12} />
+                          {experience.location}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

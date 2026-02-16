@@ -1,16 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
 import Projects from './components/Projects';
-import DemosceneGallery from './components/DemosceneGallery';
+import Blog from './components/Blog';
+import BlogPostPage from './components/BlogPost';
 import Experience from './components/Experience';
-import Resume from './components/Resume';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ThemeProvider from './contexts/ThemeContext';
+
+function HomePage() {
+  return (
+    <>
+      <main>
+        <Hero />
+        <div className="section-divider" />
+        <Experience />
+        <div className="section-divider" />
+        <Projects />
+        <div className="section-divider" />
+        <Blog />
+        <div className="section-divider" />
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  );
+}
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +62,7 @@ function App() {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="w-16 h-16 border-4 border-apple-blue border-t-transparent rounded-full"
+                className="w-16 h-16 border-4 border-ind-accent border-t-transparent rounded-full"
               />
             </motion.div>
           ) : (
@@ -55,15 +73,10 @@ function App() {
               transition={{ duration: 0.5 }}
             >
               <Header />
-              <main>
-                <Hero />
-                <Projects />
-                <DemosceneGallery />
-                <Experience />
-                <Skills />
-                <Contact />
-              </main>
-              <Footer />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/blog/:slug" element={<BlogPostPage />} />
+              </Routes>
             </motion.div>
           )}
         </AnimatePresence>
