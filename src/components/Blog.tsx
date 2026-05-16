@@ -35,6 +35,13 @@ const Blog: React.FC = () => {
                   {post.readingTime}
                 </span>
               </div>
+              {post.series && (
+                <div className="mb-3">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ind-accent">
+                    {post.series.title} · Devlog {post.series.entry} · {post.series.status} series
+                  </span>
+                </div>
+              )}
               <h3 className="mono-title text-xl mb-3">{post.title}</h3>
               <p className="text-ind-text-dim text-sm leading-relaxed mb-4">
                 {post.description}

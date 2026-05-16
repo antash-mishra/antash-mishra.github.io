@@ -40,6 +40,7 @@ function ScrollToTop() {
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -81,7 +82,7 @@ function App() {
               transition={{ duration: 0.5 }}
             >
               <ScrollToTop />
-              <Header />
+              {pathname === '/' && <Header />}
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/blog/:slug" element={<BlogPostPage />} />

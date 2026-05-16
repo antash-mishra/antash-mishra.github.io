@@ -5,9 +5,30 @@ export interface BlogPostMeta {
   description: string;
   tags: string[];
   readingTime: string;
+  series?: {
+    slug: string;
+    title: string;
+    entry: number;
+    status: 'ongoing' | 'complete';
+  };
 }
 
 export const blogPosts: BlogPostMeta[] = [
+  {
+    slug: 'tiny3dlatent-devlog-01-procedural-3d-dataset',
+    title: 'Building a Tiny 3D Dataset Instead of Downloading a Giant One',
+    date: '2026-05-17',
+    description:
+      'The first Tiny3D-Latent devlog: starting a native-3D generation project by building a small procedural voxel dataset from scratch.',
+    tags: ['3D', 'Generative AI', 'Devlog', 'PyTorch', 'Voxels'],
+    readingTime: '7 min read',
+    series: {
+      slug: 'tiny3d-latent',
+      title: 'Tiny3D-Latent',
+      entry: 1,
+      status: 'ongoing',
+    },
+  },
   {
     slug: 'finetuning-qwen-stt',
     title: 'Finetuning Qwen STT Model for Hindi Language',

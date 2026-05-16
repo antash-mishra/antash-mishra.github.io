@@ -7,9 +7,27 @@ import 'highlight.js/styles/atom-one-dark.css';
 import { blogPosts } from '../data/blogPosts';
 
 import finetuningQwenContent from '../content/blog/finetuning-qwen-stt.md?raw';
+import Tiny3DLatentDevlog01 from './blog/Tiny3DLatentDevlog01';
 
-const contentMap: Record<string, string> = {
-  'finetuning-qwen-stt': finetuningQwenContent,
+type BlogContent =
+  | {
+      kind: 'markdown';
+      content: string;
+    }
+  | {
+      kind: 'component';
+      Component: React.ComponentType;
+    };
+
+const contentMap: Record<string, BlogContent> = {
+  'tiny3dlatent-devlog-01-procedural-3d-dataset': {
+    kind: 'component',
+    Component: Tiny3DLatentDevlog01,
+  },
+  'finetuning-qwen-stt': {
+    kind: 'markdown',
+    content: finetuningQwenContent,
+  },
 };
 
 const BlogPostPage: React.FC = () => {
@@ -34,7 +52,7 @@ const BlogPostPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 pt-24 pb-20">
+    <div className="min-h-screen bg-gray-900 pt-10 md:pt-12 pb-20">
       <div className="container mx-auto px-6 max-w-3xl">
         <Link
           to="/"
@@ -52,6 +70,13 @@ const BlogPostPage: React.FC = () => {
               {post.readingTime}
             </span>
           </div>
+          {post.series && (
+            <div className="mb-4">
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-ind-accent">
+                {post.series.title} · Devlog {post.series.entry} · {post.series.status} series
+              </span>
+            </div>
+          )}
           <h1 className="font-display text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
             {post.title}
           </h1>
@@ -65,12 +90,16 @@ const BlogPostPage: React.FC = () => {
         </header>
 
         <article className="prose prose-invert prose-amber max-w-none">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeHighlight]}
-          >
-            {content.replace(/^#\s+.+\n+/, '')}
-          </ReactMarkdown>
+          {content.kind === 'markdown' ? (
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight]}
+            >
+              {content.content.replace(/^#\s+.+\n+/, '')}
+            </ReactMarkdown>
+          ) : (
+            <content.Component />
+          )}
         </article>
       </div>
     </div>

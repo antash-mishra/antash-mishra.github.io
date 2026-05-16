@@ -322,8 +322,13 @@ const Hero: React.FC = () => {
         >
           Ships apps by day, builds game engines and AI agents by night.
           <motion.span
-            animate={{ opacity: [1, 0] }}
-            transition={{ duration: 0.7, repeat: Infinity, repeatType: 'reverse', ease: 'steps(2)' }}
+            animate={{ opacity: [1, 1, 0, 0] }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              ease: 'linear',
+              times: [0, 0.49, 0.5, 1],
+            }}
             className="inline-block w-[2px] h-5 bg-ind-accent ml-0.5 align-middle"
           />
         </motion.p>
