@@ -31,6 +31,17 @@ const Tiny3DLatentDevlog01: React.FC = () => {
           affordable version myself: learn a 3D latent space, generate inside it, and decode the
           result into a mesh.
         </p>
+        <p>
+          The code for the project is available on{' '}
+          <a
+            href="https://github.com/antash-mishra/mini-latent"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+          .
+        </p>
 
         <CodeBlock>{`text label
   -> condition vector
