@@ -320,17 +320,19 @@ const Hero: React.FC = () => {
           variants={itemVariants}
           className="text-lg md:text-xl text-ind-text-dim max-w-xl mx-auto mb-8"
         >
-          Ships apps by day, builds game engines and AI agents by night.
-          <motion.span
-            animate={{ opacity: [1, 1, 0, 0] }}
-            transition={{
-              duration: 1,
-              repeat: Infinity,
-              ease: 'linear',
-              times: [0, 0.49, 0.5, 1],
-            }}
-            className="inline-block w-[2px] h-5 bg-ind-accent ml-0.5 align-middle"
-          />
+          <span className="inline-flex items-center justify-center">
+            <span>Hello, I’m Antash. I’m usually building something.</span>
+            <motion.span
+              animate={{ opacity: [1, 1, 0, 0] }}
+              transition={{
+                duration: 1,
+                repeat: Infinity,
+                ease: 'linear',
+                times: [0, 0.49, 0.5, 1],
+              }}
+              className="ml-[2px] inline-block h-[1.05em] w-[2px] bg-ind-accent"
+            />
+          </span>
         </motion.p>
 
         {/* CTA buttons */}
@@ -373,8 +375,8 @@ const Hero: React.FC = () => {
         {/* Compact blog update strip */}
         {latestPost && (
           <motion.div variants={itemVariants}>
-            <Link to={`/blog/${latestPost.slug}`} className="group block max-w-lg mx-auto">
-              <div className="bento-card overflow-hidden !bg-ind-surface/60 backdrop-blur-md">
+            <Link to={`/blog/${latestPost.slug}`} className="group mx-auto block w-full max-w-[390px] text-left">
+              <div className="bento-card overflow-hidden !bg-ind-surface/60 backdrop-blur-md text-left">
                 {/* Compact title bar */}
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-ind-surface-alt/80 border-b border-ind-border">
                   <div className="flex gap-1">
@@ -386,12 +388,13 @@ const Hero: React.FC = () => {
                   <span className="font-mono text-[10px] text-ind-text-dim ml-auto">{latestPost.readingTime}</span>
                 </div>
                 {/* Single-line content */}
-                <div className="px-4 py-3 flex items-center gap-3">
-                  <span className="font-mono text-sm text-ind-accent shrink-0">#</span>
-                  <span className="font-display text-sm font-semibold text-white group-hover:text-ind-accent transition-colors truncate">
+                <div className="flex min-h-11 items-center justify-start gap-2 px-3 py-2.5 text-left">
+                  <span className="block min-w-0 flex-1 truncate text-left font-mono text-[13px] leading-5 text-white transition-colors group-hover:text-ind-accent">
                     {latestPost.title}
                   </span>
-                  <ArrowRight size={14} className="text-ind-accent shrink-0 group-hover:translate-x-1 transition-transform" />
+                  <span className="inline-flex h-6 w-6 flex-none items-center justify-center text-ind-accent">
+                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+                  </span>
                 </div>
               </div>
             </Link>

@@ -15,6 +15,15 @@ export interface BlogPostMeta {
 
 export const blogPosts: BlogPostMeta[] = [
   {
+    slug: 'understanding-marching-cubes',
+    title: 'From Marching Squares to Marching Cubes',
+    date: '2026-06-04',
+    description:
+      'A visual exploration of marching cubes, starting with the smaller 2D idea of marching squares and building up to surface extraction in 3D.',
+    tags: ['Graphics', '3D', 'Algorithms', 'Visualization'],
+    readingTime: '10 min read',
+  },
+  {
     slug: 'tiny3dlatent-devlog-01-procedural-3d-dataset',
     title: 'Building a Tiny 3D Dataset Instead of Downloading a Giant One',
     date: '2026-05-17',

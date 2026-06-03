@@ -5,14 +5,14 @@ import { blogPosts } from '../data/blogPosts';
 
 const Blog: React.FC = () => {
   return (
-    <section id="blog" className="py-20 bg-gray-900">
+    <section id="blog" className="bg-gray-900 py-16">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-12"
+          className="mb-8"
         >
           <span className="section-eyebrow">04 // Blog</span>
           <h2 className="section-heading">Dev Log</h2>
@@ -23,43 +23,35 @@ const Blog: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          className="divide-y divide-ind-border/60 md:divide-y-0 md:space-y-2"
         >
           {blogPosts.map((post) => (
-            <div key={post.slug} className="bento-card p-6">
-              <div className="flex items-center justify-between mb-3">
-                <span className="font-mono text-xs text-ind-text-dim">
-                  {post.date}
-                </span>
-                <span className="font-mono text-xs text-ind-text-dim">
-                  {post.readingTime}
-                </span>
+            <article
+              key={post.slug}
+              className="group grid gap-3 py-4 transition-colors hover:bg-ind-surface/25 first:pt-0 md:grid-cols-[110px_1fr_auto] md:items-center md:px-3 md:py-3"
+            >
+              <time className="font-mono text-xs text-ind-text-dim" dateTime={post.date}>
+                {post.date}
+              </time>
+
+              <div className="min-w-0">
+                <Link to={`/blog/${post.slug}`} className="block">
+                  <h3 className="mono-title text-lg transition-colors group-hover:text-ind-accent">
+                    {post.title}
+                  </h3>
+                </Link>
+                <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-ind-text-dim">
+                  {post.series ? `${post.series.title} · ` : ''}{post.tags.slice(0, 2).join(' / ')}
+                </p>
               </div>
-              {post.series && (
-                <div className="mb-3">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ind-accent">
-                    {post.series.title} · Devlog {post.series.entry} · {post.series.status} series
-                  </span>
-                </div>
-              )}
-              <h3 className="mono-title text-xl mb-3">{post.title}</h3>
-              <p className="text-ind-text-dim text-sm leading-relaxed mb-4">
-                {post.description}
-              </p>
-              <div className="flex flex-wrap gap-1.5 mb-4">
-                {post.tags.map((tag) => (
-                  <span key={tag} className="tech-tag text-[10px] px-2 py-0.5">
-                    {tag}
-                  </span>
-                ))}
-              </div>
+
               <Link
                 to={`/blog/${post.slug}`}
-                className="font-mono text-sm text-ind-accent hover:underline"
+                className="font-mono text-xs uppercase tracking-[0.16em] text-ind-accent hover:underline md:justify-self-end"
               >
                 read &rarr;
               </Link>
-            </div>
+            </article>
           ))}
         </motion.div>
       </div>

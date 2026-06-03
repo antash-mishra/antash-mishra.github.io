@@ -14,12 +14,16 @@ const Experience: React.FC = () => {
       period: 'Aug 2025 – Present',
       isPresent: true,
       description:
-        'Owning delivery of Shodh (self-serve analytics dashboard) and shipping features for Analytics Central (~10,000 employees).',
+        'Building analytics platforms, data refresh systems, and internal tools for credit policy, product, model risk, and sales teams.',
       achievements: [
-        'Owned end-to-end delivery of Shodh, a self-serve analytics dashboard for credit policy, product, and model risk teams',
-        'Shipped features and APIs for Analytics Central — a microservice platform used by ~10,000 employees — to centralize sales and business analytics',
+        'Owned end-to-end delivery of Shodh, a self-serve analytics dashboard used by credit policy, product, and model risk teams to make faster data-backed decisions',
+        'Developed features and APIs for Analytics Central, a microservice-based analytics platform used by ~10,000 employees to centralize sales and business analytics',
+        'Built a UI-driven AWS Glue refresh pipeline with PostgreSQL metadata and ECS/API Gateway job triggers, reducing manual data refresh turnaround from 1–2 days to minutes',
+        'Added refresh tracking for execution time, status, and errors, making failed jobs easier to debug and reducing operational blind spots',
+        'Built push and in-app notification services for Analytics Central',
+        'Optimized map-based services to render and manage 1M+ data points efficiently',
       ],
-      technologies: ['React', 'Next.js', 'Node.js', 'Python', 'REST APIs', 'Microservices'],
+      technologies: ['React', 'Next.js', 'Node.js', 'Python', 'AWS Glue', 'PostgreSQL', 'ECS', 'API Gateway', 'Microservices'],
     },
     {
       id: 2,

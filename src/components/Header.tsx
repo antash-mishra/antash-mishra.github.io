@@ -23,6 +23,46 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToY = (targetTop: number) => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    window.scrollTo({
+      top: targetTop,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    });
+  };
+
+  const handleNavClick = (href: string) => {
+    // Header only renders on the homepage today. If it is ever reused elsewhere,
+    // fall back to normal navigation instead of trying to scroll a missing page.
+    if (window.location.pathname !== '/') {
+      window.location.href = href;
+      return;
+    }
+
+    setIsMenuOpen(false);
+
+    const hash = href.split('#')[1] ?? '';
+
+    if (!hash) {
+      window.history.pushState(null, '', '/#');
+      scrollToY(0);
+      return;
+    }
+
+    const target = document.getElementById(hash);
+    if (!target) return;
+
+    // The header is fixed, so a raw hash jump places section headings too high.
+    // Manually calculating the destination keeps the scroll smooth and gives the
+    // section a little breathing room below the nav.
+    const headerOffset = 80;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+    window.history.pushState(null, '', `/#${hash}`);
+    scrollToY(targetTop);
+  };
+
   return (
     <motion.header
       initial={{ y: -100 }}
@@ -45,15 +85,16 @@ const Header: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <motion.a
+              <motion.button
                 key={item.href}
-                href={item.href}
+                type="button"
+                onClick={() => handleNavClick(item.href)}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 className="text-ind-text-dim hover:text-ind-accent uppercase tracking-wider text-sm font-medium transition-colors duration-200"
               >
                 {item.label}
-              </motion.a>
+              </motion.button>
             ))}
           </div>
 
@@ -79,14 +120,14 @@ const Header: React.FC = () => {
             className="md:hidden mt-4 py-4 bg-ind-surface border border-ind-border rounded-lg"
           >
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.href}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-4 py-2 text-ind-text-dim hover:text-ind-accent hover:bg-gray-800 uppercase tracking-wider text-sm transition-colors duration-200"
+                type="button"
+                onClick={() => handleNavClick(item.href)}
+                className="block w-full px-4 py-2 text-left text-ind-text-dim hover:text-ind-accent hover:bg-gray-800 uppercase tracking-wider text-sm transition-colors duration-200"
               >
                 {item.label}
-              </a>
+              </button>
             ))}
           </motion.div>
         )}

@@ -8,6 +8,7 @@ import { blogPosts } from '../data/blogPosts';
 
 import finetuningQwenContent from '../content/blog/finetuning-qwen-stt.md?raw';
 import Tiny3DLatentDevlog01 from './blog/Tiny3DLatentDevlog01';
+import UnderstandingMarchingCubes from './blog/understanding-marching-cubes/UnderstandingMarchingCubes';
 
 type BlogContent =
   | {
@@ -20,6 +21,10 @@ type BlogContent =
     };
 
 const contentMap: Record<string, BlogContent> = {
+  'understanding-marching-cubes': {
+    kind: 'component',
+    Component: UnderstandingMarchingCubes,
+  },
   'tiny3dlatent-devlog-01-procedural-3d-dataset': {
     kind: 'component',
     Component: Tiny3DLatentDevlog01,
@@ -53,7 +58,7 @@ const BlogPostPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 pt-10 md:pt-12 pb-20">
-      <div className="container mx-auto px-6 max-w-3xl">
+      <div className={`container mx-auto px-6 ${slug === 'understanding-marching-cubes' ? 'max-w-5xl' : 'max-w-3xl'}`}>
         <Link
           to="/"
           className="font-mono text-sm text-ind-text-dim hover:text-ind-accent transition-colors inline-block mb-8"
