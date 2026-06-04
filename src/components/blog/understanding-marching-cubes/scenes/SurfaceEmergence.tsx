@@ -14,6 +14,7 @@ import { buildSphereWalkthrough, trianglesThroughStep } from '../math/sphereWalk
 import type { Edge3D, Triangle, Vec3 } from '../types';
 import ControlButton from '../shared/ControlButton';
 import SceneShell from '../shared/SceneShell';
+import useViewportPlayback from '../shared/useViewportPlayback';
 import TriangleMesh from '../shared/TriangleMesh';
 
 type VisualStage = 'corners' | 'classify' | 'edges' | 'triangle' | 'mesh';
@@ -203,6 +204,7 @@ const SurfaceEmergence = () => {
   const [guidedIndex, setGuidedIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
+  const { ref: sceneRef, isPlaybackActive } = useViewportPlayback<HTMLDivElement>();
   const walkthrough = useMemo(() => buildSphereWalkthrough(resolution), []);
   const activeCell = walkthrough.activeCells[activeStep] ?? walkthrough.activeCells[0];
   const guidedStep = guidedSteps[guidedIndex];
@@ -250,13 +252,17 @@ const SurfaceEmergence = () => {
   }, []);
 
   useEffect(() => {
-    if (!playing) return undefined;
+    // The walkthrough should not finish before the reader reaches it.
+    // It pauses off-screen / when the tab loses focus and resumes from the same step.
+    if (!playing || !isPlaybackActive) return undefined;
+
     const timer = window.setInterval(goNext, 820);
     return () => window.clearInterval(timer);
-  }, [goNext, playing]);
+  }, [goNext, isPlaybackActive, playing]);
 
   return (
     <SceneShell
+      containerRef={sceneRef}
       title="Sphere walkthrough"
       controls={
         <>

@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, Ref } from 'react';
 
-type SceneShellProps = { title: string; children: ReactNode; controls?: ReactNode };
+type SceneShellProps = { title: string; children: ReactNode; controls?: ReactNode; containerRef?: Ref<HTMLDivElement> };
 
 /** Consistent frame for all interactive scenes. */
-const SceneShell = ({ title, children, controls }: SceneShellProps) => (
-  <div className="not-prose my-8 overflow-hidden border border-ind-border bg-ind-surface-alt">
+const SceneShell = ({ title, children, controls, containerRef }: SceneShellProps) => (
+  <div ref={containerRef} className="not-prose my-8 overflow-hidden border border-ind-border bg-ind-surface-alt">
     <div className="flex flex-col gap-3 border-b border-ind-border bg-ind-surface p-4 md:flex-row md:items-center md:justify-between">
       <div>
         <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-ind-accent">Interactive visual</div>

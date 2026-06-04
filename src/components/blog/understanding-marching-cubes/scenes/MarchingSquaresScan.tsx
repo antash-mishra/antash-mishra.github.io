@@ -6,6 +6,7 @@ import { squareSegmentsForFullGrid } from '../math/marchingSquares';
 import ControlButton from '../shared/ControlButton';
 import IsoSlider from '../shared/IsoSlider';
 import SceneShell from '../shared/SceneShell';
+import useViewportPlayback from '../shared/useViewportPlayback';
 
 /** Animates a full 2D marching pass so the contour feels accumulated, not magically generated. */
 const MarchingSquaresScan = () => {
@@ -13,6 +14,7 @@ const MarchingSquaresScan = () => {
   const [iso, setIso] = useState(0.5);
   const [cellIndex, setCellIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
+  const { ref: sceneRef, isPlaybackActive } = useViewportPlayback<HTMLDivElement>();
   const totalCells = gridSize * gridSize;
   const segments = useMemo(() => squareSegmentsForFullGrid(gridSize, iso, cellIndex + 1), [cellIndex, iso]);
   const activeX = cellIndex % gridSize;
@@ -20,16 +22,20 @@ const MarchingSquaresScan = () => {
   const step = 3.2 / gridSize;
 
   useEffect(() => {
-    if (!playing) return undefined;
+    // Keep the scan armed by default, but only advance while the visual is visible
+    // and the page has focus. Leaving the section pauses the timer without resetting.
+    if (!playing || !isPlaybackActive) return undefined;
+
     const timer = window.setInterval(() => setCellIndex((current) => (current + 1 >= totalCells ? 0 : current + 1)), 180);
     return () => window.clearInterval(timer);
-  }, [playing, totalCells]);
+  }, [isPlaybackActive, playing, totalCells]);
 
   // Changing the iso-value changes the entire contour, so restart the scan from the first cell.
   useEffect(() => { setCellIndex(0); }, [iso]);
 
   return (
     <SceneShell
+      containerRef={sceneRef}
       title="Marching squares scan"
       controls={<><IsoSlider value={iso} onChange={setIso} /><ControlButton onClick={() => setPlaying(!playing)} active={playing}>{playing ? 'pause' : 'play'}</ControlButton><ControlButton onClick={() => { setPlaying(false); setCellIndex(0); }}>reset</ControlButton></>}
     >
