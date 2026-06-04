@@ -21,7 +21,7 @@ const ResolutionComparison = () => (
       <ResolutionMesh resolution={6} x={-1.9} />
       <ResolutionMesh resolution={10} x={0} />
       <ResolutionMesh resolution={14} x={1.9} />
-      <OrbitControls enablePan={false} />
+      <OrbitControls enablePan={false} enableZoom={false} />
     </Canvas>
   </SceneShell>
 );
