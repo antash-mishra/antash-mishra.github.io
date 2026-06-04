@@ -12,7 +12,7 @@ const MarchingSquaresScan = () => {
   const gridSize = 8;
   const [iso, setIso] = useState(0.5);
   const [cellIndex, setCellIndex] = useState(0);
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
   const totalCells = gridSize * gridSize;
   const segments = useMemo(() => squareSegmentsForFullGrid(gridSize, iso, cellIndex + 1), [cellIndex, iso]);
   const activeX = cellIndex % gridSize;

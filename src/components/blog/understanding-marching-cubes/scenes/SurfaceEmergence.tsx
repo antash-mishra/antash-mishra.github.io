@@ -201,7 +201,7 @@ const LegendDot = ({ color, label }: { color: string; label: string }) => (
 const SurfaceEmergence = () => {
   const resolution = 6;
   const [guidedIndex, setGuidedIndex] = useState(0);
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
   const walkthrough = useMemo(() => buildSphereWalkthrough(resolution), []);
   const activeCell = walkthrough.activeCells[activeStep] ?? walkthrough.activeCells[0];
