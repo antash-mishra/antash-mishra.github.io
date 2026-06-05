@@ -63,14 +63,19 @@ const UnderstandingMarchingCubes = () => (
         “terrain density”, or something produced by a neural network.
       </p>
       <p>
-        The key word here is <strong>iso-value</strong>. An iso-value is the threshold where we say
-        the boundary exists. If values below the threshold are outside and values above it are
-        inside, then the boundary must live wherever the field crosses that threshold.
+        The first key word is <strong>iso-value</strong>. The simplest way to think about it is:
+        an iso-value is the cutoff number we choose.
+      </p>
+      <p>
+        Imagine every dot in the grid has a number. If the dot’s number is greater than or equal to
+        the iso-value, we color it as inside. If the dot’s number is smaller than the iso-value, we
+        color it as outside. The boundary is not one of the dots. The boundary is the place between
+        neighboring dots where the color changes from outside to inside.
       </p>
       <ScalarFieldExplorer />
       <p>
-        In the visual above, changing the iso-value changes which samples count as inside. The
-        algorithm’s job is to find the boundary between the two groups.
+        In the visual above, move the iso-value slider and watch the dots change groups. Marching
+        algorithms start from this exact question: where do neighboring samples disagree?
       </p>
     </section>
 
@@ -124,6 +129,12 @@ const UnderstandingMarchingCubes = () => (
         When neighboring corners disagree, the boundary must cross the edge between them.
       </p>
       <MarchingSquareCell />
+      <p>
+        The exact position of the segment comes from interpolation. Marching squares looks along
+        each crossed edge and estimates where the value would reach the iso-value. Those crossing
+        points are not always centered on the edges. When the crossings sit at different offsets, the
+        resulting contour naturally tilts with them.
+      </p>
       <p>
         This is the core idea. We are not drawing a line because we know the final shape already. We
         are drawing a line because the corner values force the boundary to pass through that square.
