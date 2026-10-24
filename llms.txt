@@ -1,0 +1,44 @@
+# Antash Mishra
+
+> Antash Mishra is a full-stack developer who also builds games, real-time graphics engines and desktop tools. Projects, work history and writing on graphics, speech and AI.
+
+I build software for work, and games, graphics engines and small tools for the fun of it. Contact: mishraantash34@gmail.com.
+
+This file is a map of https://antash.dev; https://antash.dev/llms-full.txt carries everything on the site as text.
+
+## Projects
+
+- [Torchlight](https://antash.dev/blog/torchlight-0-1): A launcher for my Linux desktop that answers each keystroke in under 5 ms. Desktop app; built with C, GTK 4, X11, Wayland.
+- [Sunoto](https://github.com/shakdwipeea/voice-dictation/releases): Voice dictation for the Mac, with speech recognition that never leaves the machine. Desktop app; built with Rust, MLX, Parakeet, macOS.
+- [Vaani](https://agents.corrodedlabs.com): A voice AI agent platform for phone calls, WhatsApp and Instagram. Full-stack; built with WebRTC, FastAPI, Next.js, LLMs, TTS/STT.
+- [Engine](https://github.com/antash-mishra/engine): A real-time OpenGL renderer that handles more than 10,000 dynamic lights. Graphics; built with C++, OpenGL, GLSL, Vulkan.
+- [Invaders 1999](https://stoned-monk.itch.io/invaders-1999): A retro shooter for Android, built from scratch in C++ and OpenGL ES. Game; built with C++, OpenGL ES, GLSL, Android Studio.
+- [Open Tunnel](https://www.npmjs.com/package/@antash-mishra/tunnel-client): An ngrok-style tunnel that puts a local server on the internet. Full-stack; built with Node.js, WebSocket, Express, TypeScript.
+- [HuskyAI](https://github.com/antash-mishra/huskyAI): A news reader that builds your feed from what you like. Full-stack; built with Next.js, FastAPI, LangChain, Celery, RAG.
+- [Mini Diffuser](https://github.com/antash-mishra/Mini-Diffuser): A diffusion model written from scratch that paints flowers. AI/ML; built with Python, PyTorch, CUDA, NumPy.
+
+## Writing
+
+- [Torchlight 0.1: a launcher for Linux that answers in under 5 ms](https://antash.dev/blog/torchlight-0-1.md): Releasing Torchlight, a Spotlight-style launcher for Linux written in C: forgiving search over apps, settings and half a million files, a quiet daemon, and a popup that looks like teletext. (2026-10-22)
+- [From Marching Squares to Marching Cubes](https://antash.dev/blog/understanding-marching-cubes.md): A visual exploration of marching cubes, starting with the smaller 2D idea of marching squares and building up to surface extraction in 3D. (2026-06-04)
+- [Building a Tiny 3D Dataset Instead of Downloading a Giant One](https://antash.dev/blog/tiny3dlatent-devlog-01-procedural-3d-dataset.md): The first Tiny3D-Latent devlog: starting a native-3D generation project by building a small procedural voxel dataset from scratch. (2026-05-17)
+- [Finetuning Qwen STT Model for Hindi Language](https://antash.dev/blog/finetuning-qwen-stt.md): Fine-tuning Qwen 0.6B with LoRA on 5 hours of Hindi speech data — dropping WER from 31% to 24.67% while keeping sub-250ms latency for Vaani. (2026-02-16)
+
+## Work
+
+- Full Stack Developer (Consultant), Piramal Finance (Aug 2025 – Present): I build Piramal’s internal web and mobile apps for analytics, lending and employee performance.
+- Full Stack Developer, Freelance (Nov 2024 – Aug 2025): Built and launched Vaani, a platform for voice and messaging AI agents.
+- Data Engineer, Piramal Finance (Jun 2022 – Dec 2024): Built the partner data marts, leadership dashboards and internal tools behind Piramal’s reporting.
+
+## Links
+
+- [GitHub](https://github.com/antash-mishra)
+- [LinkedIn](https://linkedin.com/in/antash-mishra)
+- [X](https://x.com/AntashMishra)
+- [itch.io](https://stoned-monk.itch.io)
+- [Email](mailto:mishraantash34@gmail.com)
+
+## Optional
+
+- [Everything on the site, including every post in full](https://antash.dev/llms-full.txt)
+- [Sitemap](https://antash.dev/sitemap.xml)

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0000a0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=VT323&display=swap" rel="stylesheet">
+    <!--
+      The title, description, link preview tags, structured data and the prerendered page are
+      written in by staticPages() in vite.config.ts, so a reader that never runs JavaScript still
+      gets the whole page.
+    -->
+    <meta name="author" content="Antash Mishra" />
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="Site summary for language models" />
+    <title>Building a Tiny 3D Dataset Instead of Downloading a Giant One | Antash Mishra</title>
+    <link rel="canonical" href="https://antash.dev/blog/tiny3dlatent-devlog-01-procedural-3d-dataset" />
+    <meta name="description" content="The first Tiny3D-Latent devlog: starting a native-3D generation project by building a small procedural voxel dataset from scratch." />
+    <meta property="og:site_name" content="Antash Mishra" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://antash.dev/blog/tiny3dlatent-devlog-01-procedural-3d-dataset" />
+    <meta property="og:title" content="Building a Tiny 3D Dataset Instead of Downloading a Giant One" />
+    <meta property="og:description" content="The first Tiny3D-Latent devlog: starting a native-3D generation project by building a small procedural voxel dataset from scratch." />
+    <meta property="og:image" content="https://antash.dev/blog/tiny3d-latent/preview-grid.png" />
+    <meta property="og:image:alt" content="A grid of procedural voxel shapes from the dataset, each labelled with its color, size and shape." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@AntashMishra" />
+    <meta property="article:published_time" content="2026-05-17" />
+    <link rel="alternate" type="application/rss+xml" href="https://antash.dev/feed.xml" title="Antash Mishra" />
+    <link rel="alternate" type="text/markdown" href="https://antash.dev/blog/tiny3dlatent-devlog-01-procedural-3d-dataset.md" title="This post as markdown" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://antash.dev/#person","name":"Antash Mishra","url":"https://antash.dev","jobTitle":"Full-stack developer","description":"Antash Mishra is a full-stack developer who also builds games, real-time graphics engines and desktop tools. Projects, work history and writing on graphics, speech and AI.","email":"mailto:mishraantash34@gmail.com","sameAs":["https://github.com/antash-mishra","https://linkedin.com/in/antash-mishra","https://x.com/AntashMishra","https://stoned-monk.itch.io"],"worksFor":{"@type":"Organization","name":"Piramal Finance"},"knowsAbout":["Full-stack development","Real-time graphics","OpenGL","Game development","Speech recognition","Voice AI"]},{"@type":"WebSite","@id":"https://antash.dev/#website","url":"https://antash.dev","name":"Antash Mishra","author":{"@id":"https://antash.dev/#person"}},{"@type":"BlogPosting","headline":"Building a Tiny 3D Dataset Instead of Downloading a Giant One","description":"The first Tiny3D-Latent devlog: starting a native-3D generation project by building a small procedural voxel dataset from scratch.","datePublished":"2026-05-17","url":"https://antash.dev/blog/tiny3dlatent-devlog-01-procedural-3d-dataset","mainEntityOfPage":"https://antash.dev/blog/tiny3dlatent-devlog-01-procedural-3d-dataset","keywords":"3D, Generative AI, Devlog, PyTorch, Voxels","author":{"@id":"https://antash.dev/#person"},"isPartOf":{"@id":"https://antash.dev/#website"},"image":"https://antash.dev/blog/tiny3d-latent/preview-grid.png"}]}</script>
+    <!-- Without JavaScript, show every window one after another instead of one at a time. -->
+    <noscript><style>.win.is-closed { display: block !important; }</style></noscript>
+    <script type="module" crossorigin src="/assets/index-CbRzYLSp.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B75aCvj2.css">
+  </head>
+  <body>
+    <script>
+      // Before anything paints: CRT mode if the visitor switched it on (the Konami code), and on
+      // the first visit of a session to the home page, a second of BIOS boot screen. Any key or
+      // click skips it. Never for reduced motion or for crawlers; the page underneath is complete.
+      (function () {
+        try {
+          if (localStorage.getItem('tv:crt') === 'on') document.documentElement.classList.add('crt');
+          if (location.pathname !== '/' || sessionStorage.getItem('tv:booted')) return;
+          sessionStorage.setItem('tv:booted', '1');
+        } catch (e) {
+          return;
+        }
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (/bot|crawl|spider|slurp|preview|lighthouse|headless/i.test(navigator.userAgent)) return;
+
+        var now = new Date();
+        var version = now.getFullYear() + '.' + ('0' + (now.getMonth() + 1)).slice(-2);
+        var boot = document.createElement('div');
+        boot.id = 'boot';
+        boot.setAttribute('aria-hidden', 'true');
+        boot.style.cssText =
+          'position:fixed;inset:0;z-index:1000;background:#000;color:#aaa;padding:20px 24px;' +
+          'font:22px/1.3 VT323,ui-monospace,monospace;white-space:pre;overflow:hidden;cursor:default';
+        var screen = document.createElement('div');
+        var hint = document.createElement('div');
+        hint.style.cssText = 'position:absolute;left:24px;bottom:16px';
+        hint.textContent = 'Press any key to skip';
+        boot.appendChild(screen);
+        boot.appendChild(hint);
+        document.body.appendChild(boot);
+
+        var lines = ['<b style="color:#fff;font-weight:normal">ANTASH BIOS v' + version + '</b>',
+          'Copyright (C) 2022-' + now.getFullYear() + ' Antash Mishra', '', ''];
+        var ok = ' <b style="color:#55ff55;font-weight:normal">OK</b>';
+        var timers = [];
+        var draw = function () { screen.innerHTML = lines.join('\n') + '<span class="boot-cursor">_</span>'; };
+        var at = function (ms, fn) { timers.push(setTimeout(function () { fn(); draw(); }, ms)); };
+        var memory = function (k) { return function () { lines[3] = 'Memory test: ' + ('   ' + k * 32).slice(-3) + 'K' + (k === 20 ? ok : ''); }; };
+        for (var k = 0; k <= 20; k++) at(60 + k * 24, memory(k));
+        at(700, function () { lines.push('Detecting drives... A: B: C:' + ok); });
+        at(900, function () { lines.push('Loading ANTASH.EXE'); });
+        for (var d = 1; d <= 6; d++) at(900 + d * 75, function () { lines[lines.length - 1] += '.'; });
+
+        var events = ['keydown', 'pointerdown', 'wheel', 'touchstart'];
+        var done = function () {
+          timers.forEach(clearTimeout);
+          events.forEach(function (type) { removeEventListener(type, done, true); });
+          boot.style.transition = 'opacity 0.15s';
+          boot.style.opacity = '0';
+          setTimeout(function () { boot.remove(); }, 160);
+        };
+        events.forEach(function (type) { addEventListener(type, done, true); });
+        at(1500, done);
+        draw();
+      })();
+    </script>
+    <div id="root"><nav class="menu chrome" aria-label="Main"><div class="m" data-open="false"><a aria-keyshortcuts="Alt+A" title="Alt+A" href="/#about" data-discover="true"><span class="k">A</span>bout</a></div><div class="m" data-open="false"><a aria-keyshortcuts="Alt+P" title="Alt+P" href="/#projects" data-discover="true"><span class="k">P</span>rojects</a><div class="drop"><a href="/#p-torchlight" data-discover="true">Torchlight</a><a href="/#p-sunoto" data-discover="true">Sunoto</a><a href="/#p-vaani" data-discover="true">Vaani</a><a href="/#p-engine" data-discover="true">Engine</a><a href="/#p-invaders-1999" data-discover="true">Invaders 1999</a><a href="/#p-open-tunnel" data-discover="true">Open Tunnel</a><a href="/#p-huskyai" data-discover="true">HuskyAI</a><a href="/#p-mini-diffuser" data-discover="true">Mini Diffuser</a></div></div><div class="m" data-open="false"><a aria-keyshortcuts="Alt+W" title="Alt+W" href="/#work" data-discover="true"><span class="k">W</span>ork</a><div class="drop"><a href="/#work" data-discover="true">Piramal Finance, Aug 2025 – Present</a><a href="/#work" data-discover="true">Freelance, Nov 2024 – Aug 2025</a><a href="/#work" data-discover="true">Piramal Finance, Jun 2022 – Dec 2024</a></div></div><div class="m" data-open="false"><a aria-keyshortcuts="Alt+R" title="Alt+R" href="/#writing" data-discover="true">W<span class="k">r</span>iting</a><div class="drop"><a href="/blog/torchlight-0-1" data-discover="true">Torchlight 0.1: a launcher for Linux th…</a><a href="/blog/understanding-marching-cubes" data-discover="true">From Marching Squares to Marching Cubes</a><a href="/blog/tiny3dlatent-devlog-01-procedural-3d-dataset" data-discover="true">Building a Tiny 3D Dataset Instead of D…</a><a href="/blog/finetuning-qwen-stt" data-discover="true">Finetuning Qwen STT Model for Hindi Lan…</a></div></div><div class="m" data-open="false"><a aria-keyshortcuts="Alt+G" title="Alt+G" href="/#tank" data-discover="true"><span class="k">G</span>ames</a><div class="drop"><a href="/#tank" data-discover="true">Tank Patrol</a></div></div><div class="m" data-open="false"><a aria-keyshortcuts="Alt+C" title="Alt+C" href="/#contact" data-discover="true"><span class="k">C</span>ontact</a><div class="drop"><a href="mailto:mishraantash34@gmail.com">mishraantash34@gmail.com</a><a href="https://github.com/antash-mishra" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://linkedin.com/in/antash-mishra" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://x.com/AntashMishra" target="_blank" rel="noopener noreferrer">X</a><a href="https://stoned-monk.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a></div></div></nav><main class="desk"><section id="post" class="win  reader " aria-labelledby="post-title" tabindex="-1"><a class="close chrome" aria-label="Close Writing" href="/#writing" data-discover="true">[<i>■</i>]</a><h2 class="title chrome"><span id="post-title">Writing</span></h2><article><header class="reader-head"><h1>Building a Tiny 3D Dataset Instead of Downloading a Giant One</h1><p><time dateTime="2026-05-17">17 May 2026</time>, <!-- -->7 min read<!-- -->. Tiny3D-Latent, part 1</p></header><div class="prose prose-invert max-w-none"><!--$--><div class="space-y-10"><section><div class="mb-5 border-b border-ind-border pb-4 font-mono text-xs uppercase tracking-[0.18em] text-ind-text-dim">Tiny3D-Latent / Devlog 1 / Ongoing series</div><p class="text-lg leading-relaxed text-ind-text">I am building a small text-to-3D system from first principles. The long-term goal is to understand the modern pattern behind systems like TRELLIS and Hunyuan3D by making a tiny, affordable version myself: learn a 3D latent space, generate inside it, and decode the result into a mesh.</p><p>The code for the project is available on<!-- --> <a href="https://github.com/antash-mishra/mini-latent" target="_blank" rel="noreferrer">GitHub</a>.</p><pre class="overflow-x-auto border border-ind-border bg-ind-surface-alt p-4 text-sm leading-relaxed text-ind-text"><code class="font-mono">text label
+  -&gt; condition vector
+  -&gt; tiny latent generator
+  -&gt; 3D latent
+  -&gt; decoder
+  -&gt; voxel grid / TSDF
+  -&gt; mesh
+  -&gt; preview render</code></pre><div class="mt-6 border-t border-ind-border pt-4"><div class="mb-2 font-mono text-xs uppercase tracking-[0.18em] text-ind-text-dim">Project path</div><p class="m-0 text-sm leading-relaxed text-ind-text-dim">Data → representation → latent space → generation → assets</p></div></section><section><h2>Why start with a dataset?</h2><p>Before a model can generate 3D objects, it needs examples of what 3D objects look like. I could begin with a real dataset such as Objaverse or ShapeNet, but that would add many problems immediately: mesh cleanup, scale normalization, licenses, inconsistent quality, and much larger preprocessing work.</p><p>For the first milestone, I wanted the opposite: a dataset I could inspect completely. So I generate simple shapes with math.</p></section><section><h2>What the dataset looks like</h2><p>A normal image is a grid of pixels. A voxel grid is the 3D version: each voxel is a tiny cube in space. In this project, a voxel stores whether that part of space is empty or filled.</p><pre class="overflow-x-auto border border-ind-border bg-ind-surface-alt p-4 text-sm leading-relaxed text-ind-text"><code class="font-mono">image = height x width
+object = depth x height x width
+
+0 = empty space
+1 = inside the object</code></pre><p>Each training example is a <code>32 x 32 x 32</code> occupancy grid. The diagram below is only one flat slice through a 3D object. Stack many slices like that and you get the full volume.</p><div class="inline-grid grid-cols-8 gap-1 border border-ind-border bg-ind-surface p-4"><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-accent bg-ind-accent"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span><span class="h-5 w-5 border border-ind-border bg-ind-surface-alt"></span></div></section><section><h2>One concrete example</h2><p>Here is one real example from the generated dataset:</p><table><tbody><tr><th>ID</th><td><code>shape_000007</code></td></tr><tr><th>Label</th><td><code>red medium matte sphere</code></td></tr><tr><th>Shape type</th><td><code>sphere</code></td></tr><tr><th>Grid shape</th><td><code>[32, 32, 32]</code></td></tr><tr><th>Filled voxels</th><td><code>1709</code></td></tr><tr><th>Saved file</th><td><code>data/procedural/train/shape_000007_occupancy.npy</code></td></tr></tbody></table><pre class="overflow-x-auto border border-ind-border bg-ind-surface-alt p-4 text-sm leading-relaxed text-ind-text"><code class="font-mono">{
+  &quot;id&quot;: &quot;shape_000007&quot;,
+  &quot;label&quot;: &quot;red medium matte sphere&quot;,
+  &quot;shape_type&quot;: &quot;sphere&quot;,
+  &quot;grid_shape&quot;: [32, 32, 32],
+  &quot;grid_dtype&quot;: &quot;uint8&quot;,
+  &quot;grid_file&quot;: &quot;data/procedural/train/shape_000007_occupancy.npy&quot;
+}</code></pre><p>Later, the autoencoder will read the voxel grid from that file and learn to compress and reconstruct its 3D shape.</p></section><section><h2>What I built in this milestone</h2><p>The first dataset contains spheres, cubes, rounded boxes, cylinders, capsules, and tori. It is saved into a simple train/validation structure:</p><pre class="overflow-x-auto border border-ind-border bg-ind-surface-alt p-4 text-sm leading-relaxed text-ind-text"><code class="font-mono">data/procedural/
+  train/
+  val/
+  metadata.json
+  dataset_stats.json</code></pre><table><thead><tr><th>Split</th><th>Count</th></tr></thead><tbody><tr><td>Train</td><td>1000</td></tr><tr><td>Validation</td><td>200</td></tr></tbody></table></section><section><h2>Dataset preview</h2><p>I also generate preview images so I can inspect the dataset without opening raw arrays.</p><figure><img src="/blog/tiny3d-latent/preview-grid.png" alt="Preview grid of procedural 3D dataset slices"/><figcaption>A preview grid of generated shapes. Each panel is one middle slice through a 3D voxel grid, not a full 3D render.</figcaption></figure></section><section><h2>A useful confusion: why a torus did not look like a torus</h2><p>One preview label said <code>green medium wide torus</code>, but the image looked like two green blobs. At first that seemed like a bug. It turned out to be a visualization lesson.</p><blockquote>The dataset stores a 3D torus. The preview shows only one 2D slice through it. A rotated torus can be sliced in a way that intersects only two small parts of the ring.</blockquote><pre class="overflow-x-auto border border-ind-border bg-ind-surface-alt p-4 text-sm leading-relaxed text-ind-text"><code class="font-mono">3D torus:
+  full donut shape
+
+single 2D slice:
+  two separate pieces</code></pre><figure><img src="/blog/tiny3d-latent/example-slices.png" alt="Three slices through a rotated torus"/><figcaption>Three different middle slices through a rotated torus. The object is valid in 3D, but any one slice can be misleading.</figcaption></figure><p>That was a good early reminder: if I inspect 3D data with weak visualizations, correct geometry can look wrong. In a later milestone I will move toward mesh extraction and better 3D previews.</p></section><section><h2>Current limits</h2><ul><li>The dataset does not contain real objects like cups or chairs yet.</li><li><code>metallic</code> and <code>matte</code> are currently labels only; they do not yet change geometry or create material channels.</li><li>The previews are 2D slices, not true mesh renders.</li><li>The data is synthetic and much cleaner than a real mesh dataset.</li></ul></section><section><h2>What comes next</h2><p>The next milestone is to turn these voxel grids into actual mesh assets:</p><pre class="overflow-x-auto border border-ind-border bg-ind-surface-alt p-4 text-sm leading-relaxed text-ind-text"><code class="font-mono">occupancy grid
+  -&gt; marching cubes
+  -&gt; mesh
+  -&gt; preview render</code></pre><p>That will make the 3D nature of the data much easier to inspect and will set up the later model stages, where the system starts learning and generating shapes rather than just constructing them procedurally.</p></section></div><!--/$--></div></article><nav aria-label="More writing" class="reader-foot"><p>Older: <a href="/blog/finetuning-qwen-stt" data-discover="true">Finetuning Qwen STT Model for Hindi Language</a></p><p>Newer: <a href="/blog/understanding-marching-cubes" data-discover="true">From Marching Squares to Marching Cubes</a></p><p><a href="/#writing" data-discover="true">All writing</a></p></nav></section></main><footer class="status chrome"><a class="help-key" href="/#help" data-discover="true"><b>F1</b> Help</a><button type="button" data-audio-switch="true" aria-pressed="true"><b>F8</b> Effects <!-- -->on</button><button type="button" data-audio-switch="true" aria-pressed="false"><b>F9</b> <!-- -->Play music</button><span class="end"><a href="/llms.txt" title="The whole site as plain text, for AI agents">llms.txt</a></span></footer></div>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Antash Mishra</title>
+    <link>https://antash.dev/</link>
+    <atom:link href="https://antash.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Writing by Antash Mishra: notes from building things.</description>
+    <language>en</language>
+    <lastBuildDate>Thu, 22 Oct 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Torchlight 0.1: a launcher for Linux that answers in under 5 ms</title>
+      <link>https://antash.dev/blog/torchlight-0-1</link>
+      <guid isPermaLink="true">https://antash.dev/blog/torchlight-0-1</guid>
+      <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+      <description>Releasing Torchlight, a Spotlight-style launcher for Linux written in C: forgiving search over apps, settings and half a million files, a quiet daemon, and a popup that looks like teletext.</description>
+      <category>Release</category>
+      <category>C</category>
+      <category>Linux</category>
+      <category>Search</category>
+      <category>Performance</category>
+    </item>
+    <item>
+      <title>From Marching Squares to Marching Cubes</title>
+      <link>https://antash.dev/blog/understanding-marching-cubes</link>
+      <guid isPermaLink="true">https://antash.dev/blog/understanding-marching-cubes</guid>
+      <pubDate>Thu, 04 Jun 2026 00:00:00 GMT</pubDate>
+      <description>A visual exploration of marching cubes, starting with the smaller 2D idea of marching squares and building up to surface extraction in 3D.</description>
+      <category>Graphics</category>
+      <category>3D</category>
+      <category>Algorithms</category>
+      <category>Visualization</category>
+    </item>
+    <item>
+      <title>Building a Tiny 3D Dataset Instead of Downloading a Giant One</title>
+      <link>https://antash.dev/blog/tiny3dlatent-devlog-01-procedural-3d-dataset</link>
+      <guid isPermaLink="true">https://antash.dev/blog/tiny3dlatent-devlog-01-procedural-3d-dataset</guid>
+      <pubDate>Sun, 17 May 2026 00:00:00 GMT</pubDate>
+      <description>The first Tiny3D-Latent devlog: starting a native-3D generation project by building a small procedural voxel dataset from scratch.</description>
+      <category>3D</category>
+      <category>Generative AI</category>
+      <category>Devlog</category>
+      <category>PyTorch</category>
+      <category>Voxels</category>
+    </item>
+    <item>
+      <title>Finetuning Qwen STT Model for Hindi Language</title>
+      <link>https://antash.dev/blog/finetuning-qwen-stt</link>
+      <guid isPermaLink="true">https://antash.dev/blog/finetuning-qwen-stt</guid>
+      <pubDate>Mon, 16 Feb 2026 00:00:00 GMT</pubDate>
+      <description>Fine-tuning Qwen 0.6B with LoRA on 5 hours of Hindi speech data — dropping WER from 31% to 24.67% while keeping sub-250ms latency for Vaani.</description>
+      <category>AI/ML</category>
+      <category>STT</category>
+      <category>LoRA</category>
+      <category>Fine-tuning</category>
+      <category>Python</category>
+    </item>
+  </channel>
+</rss>

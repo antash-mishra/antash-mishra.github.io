@@ -1,0 +1,718 @@
+# Antash Mishra
+
+> Antash Mishra is a full-stack developer who also builds games, real-time graphics engines and desktop tools. Projects, work history and writing on graphics, speech and AI.
+
+I build software for work, and games, graphics engines and small tools for the fun of it.
+
+Email: mishraantash34@gmail.com
+GitHub: https://github.com/antash-mishra
+LinkedIn: https://linkedin.com/in/antash-mishra
+X: https://x.com/AntashMishra
+itch.io: https://stoned-monk.itch.io
+
+## Projects
+
+### Torchlight
+
+A launcher for my Linux desktop that answers each keystroke in under 5 ms.
+
+Spotlight-style launcher for Linux. A resident daemon answers each keystroke in under 5 ms with 500,000 files indexed, forgives typos and abbreviations, and switches to open windows on X11 and Wayland.
+
+- Category: Desktop app
+- Built with: C, GTK 4, X11, Wayland
+- Read the release post: https://antash.dev/blog/torchlight-0-1
+- Source: https://github.com/antash-mishra/torchlight
+
+### Sunoto
+
+Voice dictation for the Mac, with speech recognition that never leaves the machine.
+
+On-device voice dictation for macOS. Tap Right Option, talk, and the text lands at the cursor. Parakeet runs on the Apple GPU through MLX, so audio never leaves the Mac.
+
+- Category: Desktop app
+- Built with: Rust, MLX, Parakeet, macOS
+- Download a release: https://github.com/shakdwipeea/voice-dictation/releases
+- Source: https://github.com/shakdwipeea/voice-dictation
+
+### Vaani
+
+A voice AI agent platform for phone calls, WhatsApp and Instagram.
+
+Real-time voice AI agent platform with sub-500 ms latency. Integrates WebRTC, TTS/STT pipelines, and LLM orchestration for telephony and conversational AI.
+
+- Category: Full-stack
+- Built with: WebRTC, FastAPI, Next.js, LLMs, TTS/STT
+- Visit Vaani: https://agents.corrodedlabs.com
+
+### Engine
+
+A real-time OpenGL renderer that handles more than 10,000 dynamic lights.
+
+Custom OpenGL real-time graphics engine with deferred and clustered deferred shading, PBR, IBL, shadow mapping, HDR post-processing, SSAO, and glTF scene support. Handles 10,000+ dynamic lights.
+
+- Category: Graphics
+- Built with: C++, OpenGL, GLSL, Vulkan
+- Source: https://github.com/antash-mishra/engine
+
+### Invaders 1999
+
+A retro shooter for Android, built from scratch in C++ and OpenGL ES.
+
+Retro 2D shooter built from scratch in modern C++ & OpenGL ES with custom rendering pipeline, HDR bloom.
+
+- Category: Game
+- Built with: C++, OpenGL ES, GLSL, Android Studio
+- Play on itch.io: https://stoned-monk.itch.io/invaders-1999
+- Source: https://github.com/antash-mishra/invaders
+
+### Open Tunnel
+
+An ngrok-style tunnel that puts a local server on the internet.
+
+A ngrok-like tunnel for secure local development. It is a simple and easy to use tunnel for local development.
+
+- Category: Full-stack
+- Built with: Node.js, WebSocket, Express, TypeScript
+- npm package: https://www.npmjs.com/package/@antash-mishra/tunnel-client
+- Source: https://github.com/antash-mishra/open-tunnel
+
+### HuskyAI
+
+A news reader that builds your feed from what you like.
+
+Developed a news aggregator which develops user feed based on the user's preferences.
+
+- Category: Full-stack
+- Built with: Next.js, FastAPI, LangChain, Celery, RAG
+- Source: https://github.com/antash-mishra/huskyAI
+
+### Mini Diffuser
+
+A diffusion model written from scratch that paints flowers.
+
+Built a diffusion model from scratch. The model is able to generate images of flowers.
+
+- Category: AI/ML
+- Built with: Python, PyTorch, CUDA, NumPy
+- Source: https://github.com/antash-mishra/Mini-Diffuser
+
+## Work
+
+### Full Stack Developer (Consultant), Piramal Finance
+
+Aug 2025 – Present, Remote
+
+I build Piramal’s internal web and mobile apps for analytics, lending and employee performance.
+
+- Built geospatial lending and fraud analysis into MapVerse, with map rendering, filtering and PostgreSQL APIs that handle over a million points.
+- Delivered the sales and collections incentive dashboards: scorecards and earnings summaries that show teams their performance and payouts.
+- Built Shodh end to end and automated its data refreshes, from 1–2 days to minutes, with tests, security fixes and Kubernetes deployment.
+- Added push notifications, deep links and Microsoft Intune protection to the Android and iOS analytics apps used by about 10,000 employees.
+
+Tools: React, Next.js, TypeScript, React Native, Node.js, PostgreSQL, AWS, Kubernetes
+
+### Full Stack Developer, Freelance
+
+Nov 2024 – Aug 2025, Remote
+
+Built and launched Vaani, a platform for voice and messaging AI agents.
+
+- Designed its real-time voice stack (WebRTC, speech-to-text, LLM tool calling, text-to-speech), replying in under 500 ms.
+- Put agents on phone lines, WhatsApp and Instagram, with campaigns, call recordings and transcripts in one dashboard.
+- Also shipped a React Native event app with live chat on a Go backend.
+
+Tools: WebRTC, FastAPI, Next.js, Go, React Native
+
+### Data Engineer, Piramal Finance
+
+Jun 2022 – Dec 2024, Bengaluru, India
+
+Built the partner data marts, leadership dashboards and internal tools behind Piramal’s reporting.
+
+- Centralized partner data into marts that reporting and decisions ran on.
+- Contributed to React Native charting libraries for mobile analytics.
+
+Tools: Python, Snowflake, Power BI, D3.js
+
+## Writing
+
+---
+
+# Torchlight 0.1: a launcher for Linux that answers in under 5 ms
+
+2026-10-22 by Antash Mishra. 4 min read. Tags: Release, C, Linux, Search, Performance.
+Original: https://antash.dev/blog/torchlight-0-1
+
+> Releasing Torchlight, a Spotlight-style launcher for Linux written in C: forgiving search over apps, settings and half a million files, a quiet daemon, and a popup that looks like teletext.
+
+Torchlight 0.1Overview
+
+[← antash.dev](https://antash.dev/)
+
+# Torchlight 0.1
+
+A launcher for Linux. Press a shortcut, type a few letters, and open any app, settings panel, file or folder. 95 of every 100 keystrokes are answered in under 5 milliseconds, even with half a million files indexed.
+
+Released 14 October 2026Version 0.1.6Written in CUbuntu, Mint, Fedora, Arch and more
+
+P100Torchlight9.3msSat 24 Oct 11:15/27
+
+__Apps1
+
+Terminal
+
+~/workspace/torchlight
+
+htop
+
+New window
+
+__Folders1
+
+terminals~/Pictures
+
+__Files2
+
+terminal.c~/…/ui/gtk
+
+terminal-notes.md~/…/torchlight/docs
+
+**Terminal**__Application
+
+AboutUse the command line
+
+Windows2 open
+
+Found byTerminalPrefix: the start of a word
+
+Actions
+
+__Switch to window
+
+__New window
+
+__**Enter** Open__**Ctrl Enter** Show in folder__**Ctrl C** Copy path__**Esc** Close
+
+Try
+
+This popup runs in your browser over a small sample home folder, using a simplified copy of Torchlight's matching rules. Type into it, use the arrow keys, or press Esc.
+
+Torchlight is a Spotlight-style launcher I built for my Linux desktop. It forgives typos and abbreviations, lists the open windows of running apps, learns what you open, and keeps up with your files as they change. Only names and paths are indexed, never file contents.
+
+All numbers below come from the project's benchmarks on one machine, a 6-core i7-8700K with 32 GB of memory.
+
+## Under 5 ms a keystroke
+
+One screen refresh at 60 Hz takes 16.7 ms. Torchlight's goal is 5 ms for 95 of every 100 keystrokes, with half a million paths in the index.
+
+3.74msTo answer a keystroke at 500,000 entries95th percentile
+
+0.11sFrom a new file on disk to a search result213,000 entries
+
+0.14%Of one core while nothing happensabout 2 min of CPU a day
+
+167MBMemory for 213,000 entriesabout 0.8 KB each
+
+__95 of 100 keystrokes are faster__half are faster
+
+50,000 entriessearch engine alone
+
+0.46 ms_median 0.05 ms_
+
+213,000 entriesreal daemon, through the socket
+
+2.8 ms_median 0.74 ms_
+
+500,000 entriessearch engine alone
+
+3.74 ms_median 0.72 ms_
+
+Time to answer one keystroke, with every test query typed one letter at a time. The big step under 5 ms came from moving search onto its own thread and scoring with [Frizbee](https://github.com/saghen/frizbee), a SIMD fuzzy matcher.
+
+## One daemon does the work
+
+The popup is only a window. A small daemon, `torchlightd`, keeps every name in memory, follows your files as they change, and answers each keystroke. Two paths run through it, and only the yellow one is something you wait for.
+
+### __When you type a letter
+
+1. **1**The popup sends the query to the daemon over a local socket. It never searches itself.
+2. **2**A newer keystroke drops the older search, so you never wait on a stale one.
+3. **3**The search reads only memory, never the disk or SQL. 95 of 100 answers return within 2.8 ms.
+
+### __When a file changes
+
+1. **1**inotify reports the folder that changed, and only that folder is rescanned.
+2. **2**The persistence thread, the only writer, saves the change to catalog.db in one transaction.
+3. **3**A new index version is built on the side and swapped in whole. The file is searchable about 0.11 s later.
+
+Point at a step to find it on the map.
+
+## Forgiving search
+
+Four lookup tables find candidates, then only those are scored. Every word you type has to match the name or one of its folders, so finds `notes.md` inside a work folder.
+
+PrefixprojectNotes.mdThe start of the name or of any word in it.
+
+SubsequenceprojectNotes.mdLetters in order, with extra points at word starts.
+
+TrigramprojectNotes.mdA piece from the middle, found through three-letter keys.
+
+TypoREADME.mdOne wrong, missing, extra or swapped letter, even in an unfinished word.
+
+Among similar matches, your own files come before SDKs, package caches and `node_modules`, and the things you open often rank higher. On my home folder, files from my own folders went from 29% to 45% of the top ten results for 50 everyday queries.
+
+## Always current, quiet when idle
+
+A change on disk rescans only its own folder and is searchable about a tenth of a second later. When nothing changes, almost nothing runs. The biggest wins:
+
+Processor use while idle
+
+8.7%0.14%
+
+One check of every folder
+
+3.97 s0.95 s
+
+Disk traffic for that check
+
+788 MB1 MB
+
+100 changed files searchable (500k paths)
+
+4 s0.11 s
+
+Memory after a big change
+
+434 MB191 MB
+
+Each row is drawn to its own scale, with the old cost as the full outline.
+
+## A look of its own
+
+The design comes from teletext, the pages of news and scores that European TVs showed before the web: blocky letters, small colored squares, and a page number and clock in the top corner, which is why the popup shows P100. Torchlight sets that look on calm colors, in light and dark. This post uses the same fonts and colors; try the Light and Dark switch at the top.
+
+![The real Torchlight popup for the query term: the Terminal app with one of its windows, two files and a folder, and a preview panel with the selected file's details and actions.](https://antash.dev/blog/torchlight/popup-dark.png)
+
+The real popup on Linux Mint, in the dark palette.
+
+## Install it
+
+On Ubuntu 24.04, Linux Mint 22 or newer, or another Ubuntu-based system, download the `.deb` from the [latest release](https://github.com/antash-mishra/torchlight/releases/latest) and run the command below. New versions then arrive through your update manager.
+
+`sudo apt install ./torchlight_*_amd64.deb`
+
+On Fedora, Arch, openSUSE, Debian 13 or another distribution with GTK 4.14 or newer, download the `.tar.gz` from the same page instead. Its installer sets Torchlight up just for you, in `~/.local`, without root; to update, run a newer release’s installer.
+
+`tar xf torchlight-*-linux-x86_64.tar.gz`
+
+`./torchlight-*-linux-x86_64/install.sh`
+
+Then bind `torchlight-gtk --toggle` to a shortcut such as Super+Space (the installer prints its full path), and you are done. [Desktop setup](https://github.com/antash-mishra/torchlight/blob/master/docs/desktop-setup.md) says where each desktop keeps its shortcuts. Open windows are listed on X11 and on GNOME, KDE Plasma, Cinnamon, COSMIC and the wlroots desktops under Wayland.
+
+[Source on GitHub](https://github.com/antash-mishra/torchlight)[Latest release](https://github.com/antash-mishra/torchlight/releases/latest)
+
+Set in Schibsted Grotesk and Bedstead.[Back to antash.dev](https://antash.dev/)
+
+---
+
+# From Marching Squares to Marching Cubes
+
+2026-06-04 by Antash Mishra. 10 min read. Tags: Graphics, 3D, Algorithms, Visualization.
+Original: https://antash.dev/blog/understanding-marching-cubes
+
+> A visual exploration of marching cubes, starting with the smaller 2D idea of marching squares and building up to surface extraction in 3D.
+
+Marching cubes is one of those algorithms I kept seeing everywhere once I started working with 3D representations. Voxels, signed distance fields, procedural terrain, neural 3D generation — eventually they all need the same bridge: values in space have to become a visible triangle mesh.
+
+The algorithm was introduced by Lorensen and Cline in their 1987 paper [Marching Cubes: A High Resolution 3D Surface Construction Algorithm](https://people.eecs.berkeley.edu/~jrs/meshpapers/LorensenCline.pdf). That paper is the source of the classic idea, but I did not find the algorithm obvious the first time I encountered it.
+
+I first tried to understand marching cubes through Sebastian Lague’s video. The video was good, but I still could not make the idea fully click. Then I read a few articles and asked Codex where I should start if I wanted to understand marching cubes properly. The most useful suggestion was simple: start with the 2D version first. That 2D version is called marching squares.
+
+This article is not meant to be a formal implementation tutorial. It is my attempt to build the idea from the smallest understandable version: first a square, then a grid of squares, then a cube, then a grid of cubes.
+
+## Before marching anything: values in space
+
+The first important shift is that marching cubes does not start with triangles. It starts with a field of values. A field is just something that can answer a question at every point in space: what number lives here?
+
+In 2D, that might be a value at each point on a flat grid. In 3D, it becomes a value at each point inside a volume. The value could mean “inside or outside”, “distance from the surface”, “terrain density”, or something produced by a neural network.
+
+The first key word is **iso-value**. The simplest way to think about it is: an iso-value is the cutoff number we choose.
+
+Imagine every dot in the grid has a number. If the dot’s number is greater than or equal to the iso-value, we color it as inside. If the dot’s number is smaller than the iso-value, we color it as outside. The boundary is not one of the dots. The boundary is the place between neighboring dots where the color changes from outside to inside.
+
+Interactive visual
+
+### Scalar field explorer
+
+iso 0.50
+
+Each dot is one sampled number. The iso-value is the cutoff: orange dots are inside, dark dots are outside. The pale line is where the two sides meet.
+
+inside: value ≥ 0.50outside: value < 0.50boundary appears between neighboring dots that disagree
+
+In the visual above, move the iso-value slider and watch the dots change groups. Marching algorithms start from this exact question: where do neighboring samples disagree?
+
+## A few words that made the idea easier
+
+I found marching cubes much easier after separating a few terms that are often mixed together casually.
+
+- **Voxel grid:** a 3D arrangement of samples. You can think of it like a 3D image.
+- **Voxel:** often imagined as a tiny cube of 3D space. In marching-cubes explanations, it is useful to think in terms of sampled values at grid points.
+- **Cell or cube:** the cube-shaped region marching cubes processes. It is formed by 8 neighboring corner samples.
+- **Isoline:** a boundary line in 2D where the field crosses the iso-value.
+- **Isosurface:** the 3D version of that boundary. Instead of a line, it is a surface made from triangles.
+
+The subtle but important point is this: for marching cubes, the cube is not just one stored value. The cube is the space between 8 neighboring values. Those values sit at the cube’s corners.
+
+## Marching squares: the smaller idea
+
+Marching squares is the 2D version of the idea. Instead of looking at a cube with 8 corners, we look at a square with 4 corners.
+
+Each corner has a value. We compare each value with the iso-value and classify the corner as inside or outside. If all corners are inside, there is no boundary passing through that square. If all corners are outside, there is also no boundary. The interesting case happens when some corners are inside and some are outside.
+
+When neighboring corners disagree, the boundary must cross the edge between them.
+
+Interactive visual
+
+### One marching square
+
+The contour connects the places where an edge crosses iso 0.50. If those crossings happen at different positions on different edges, the segment becomes slanted.
+
+click/tap visual to pause
+
+The exact position of the segment comes from interpolation. Marching squares looks along each crossed edge and estimates where the value would reach the iso-value. Those crossing points are not always centered on the edges. When the crossings sit at different offsets, the resulting contour naturally tilts with them.
+
+This is the core idea. We are not drawing a line because we know the final shape already. We are drawing a line because the corner values force the boundary to pass through that square.
+
+## A contour emerges from many small decisions
+
+One square only gives one tiny local piece of the boundary. To get a complete shape, we scan many squares in the grid. Each square contributes either nothing or a small line segment. Those small line segments accumulate into a contour.
+
+Interactive visual
+
+### Marching squares scan
+
+iso 0.50
+
+This was the part that made marching cubes feel less mysterious to me. The algorithm is not trying to understand the whole shape at once. It makes a simple local decision again and again.
+
+## From marching squares to marching cubes
+
+Marching cubes is the same idea lifted into 3D. The square becomes a cube. Four corner values become eight corner values. A contour line becomes a surface. And line segments become triangle patches.
+
+The cube is classified in the same way: compare every corner value to the iso-value. If all corners are on the same side, that cube contributes no surface. If some corners are inside and some are outside, the surface passes through the cube.
+
+Interactive visual
+
+### One marching cube
+
+click/tap visual to pause
+
+This is where lookup tables enter the story. A cube has 8 corners, and each corner can be inside or outside, so there are 256 possible corner patterns. The lookup table is a compact way to say: for this pattern, these edges are crossed, and these triangles should be created.
+
+The lookup table is important for implementation, but it is not the main insight. The main insight is still the same as marching squares: neighboring samples disagree, so the boundary must pass between them.
+
+## Watching a sphere appear cube by cube
+
+A sphere can be represented as a simple signed field: distance from the center minus the radius. Points inside the sphere are negative. Points outside are positive. The surface is where the value is zero.
+
+```
+field(x, y, z) = distance_from_center - radius
+
+inside:  field < 0
+surface: field = 0
+outside: field > 0
+```
+
+In the walkthrough below, the left side shows one active cube and the right side shows the accumulated mesh. The useful thing to watch is the chain: corner values, inside/outside classification, crossed edges, triangle patch, then accumulated surface.
+
+Interactive visual
+
+### Sphere walkthrough
+
+Step 1 of 5 — Corners
+
+Start with one cube from the sampled sphere field. Marching cubes only sees this cube’s 8 corner values.
+
+cell 1/26 · cube case 64 · crossed edges 3 · triangles 1 · iso 0
+
+insideoutsidecrossed edgenew trianglemesh
+
+## Procedural terrain is also just a field
+
+The terrain example is the same idea with a different field. Instead of a sphere field, we first create a height for every `x, z` position. Then we compare each 3D point’s`y` value with that height.
+
+If the point is below the terrain height, we treat it as solid ground. If it is above the height, we treat it as empty air. The surface is where that value crosses zero.
+
+Interactive visual
+
+### Procedural terrain extraction
+
+resolution 22 · 2186 triangles
+
+```
+function height(x, z) {
+  return noise(x, z)
+}
+
+function field(x, y, z) {
+  return y - height(x, z)
+}
+
+for each cube in grid {
+  values = sample8Corners(cube, field)
+  triangles += marchingCubes(values, iso = 0)
+}
+```
+
+So the terrain mesh is not a special case. It is still just marching cubes over sampled values. The only difference is how those values are produced.
+
+## Resolution controls what the algorithm can recover
+
+Marching cubes cannot invent detail that was not sampled. If the grid is coarse, the result is coarse. If the grid is denser, the algorithm has more information about where the surface crosses the volume.
+
+Interactive visual
+
+### Resolution comparison
+
+This is why low-resolution marching-cubes outputs often look blocky or faceted. The algorithm is doing the best it can with the samples it was given.
+
+## Why this matters for TinySDS3d
+
+This is also why marching cubes shows up in my TinySDS3d project. The project can create or learn grid-like 3D representations, but a grid is not yet a real asset. To make it inspectable and exportable, I need this bridge:
+
+```
+occupancy grid / field
+  -> surface extraction
+  -> mesh
+```
+
+So the article stays general, but the motivation is practical. Marching cubes is the step that turns procedural or learned 3D fields into something I can actually look at, rotate, render, and eventually export.
+
+---
+
+# Building a Tiny 3D Dataset Instead of Downloading a Giant One
+
+2026-05-17 by Antash Mishra. 7 min read. Tags: 3D, Generative AI, Devlog, PyTorch, Voxels.
+Original: https://antash.dev/blog/tiny3dlatent-devlog-01-procedural-3d-dataset
+
+> The first Tiny3D-Latent devlog: starting a native-3D generation project by building a small procedural voxel dataset from scratch.
+
+Tiny3D-Latent / Devlog 1 / Ongoing series
+
+I am building a small text-to-3D system from first principles. The long-term goal is to understand the modern pattern behind systems like TRELLIS and Hunyuan3D by making a tiny, affordable version myself: learn a 3D latent space, generate inside it, and decode the result into a mesh.
+
+The code for the project is available on [GitHub](https://github.com/antash-mishra/mini-latent).
+
+```
+text label
+  -> condition vector
+  -> tiny latent generator
+  -> 3D latent
+  -> decoder
+  -> voxel grid / TSDF
+  -> mesh
+  -> preview render
+```
+
+Project path
+
+Data → representation → latent space → generation → assets
+
+## Why start with a dataset?
+
+Before a model can generate 3D objects, it needs examples of what 3D objects look like. I could begin with a real dataset such as Objaverse or ShapeNet, but that would add many problems immediately: mesh cleanup, scale normalization, licenses, inconsistent quality, and much larger preprocessing work.
+
+For the first milestone, I wanted the opposite: a dataset I could inspect completely. So I generate simple shapes with math.
+
+## What the dataset looks like
+
+A normal image is a grid of pixels. A voxel grid is the 3D version: each voxel is a tiny cube in space. In this project, a voxel stores whether that part of space is empty or filled.
+
+```
+image = height x width
+object = depth x height x width
+
+0 = empty space
+1 = inside the object
+```
+
+Each training example is a `32 x 32 x 32` occupancy grid. The diagram below is only one flat slice through a 3D object. Stack many slices like that and you get the full volume.
+
+## One concrete example
+
+Here is one real example from the generated dataset:
+
+| ID | `shape_000007` |
+| --- | --- |
+| Label | `red medium matte sphere` |
+| Shape type | `sphere` |
+| Grid shape | `[32, 32, 32]` |
+| Filled voxels | `1709` |
+| Saved file | `data/procedural/train/shape_000007_occupancy.npy` |
+
+```
+{
+  "id": "shape_000007",
+  "label": "red medium matte sphere",
+  "shape_type": "sphere",
+  "grid_shape": [32, 32, 32],
+  "grid_dtype": "uint8",
+  "grid_file": "data/procedural/train/shape_000007_occupancy.npy"
+}
+```
+
+Later, the autoencoder will read the voxel grid from that file and learn to compress and reconstruct its 3D shape.
+
+## What I built in this milestone
+
+The first dataset contains spheres, cubes, rounded boxes, cylinders, capsules, and tori. It is saved into a simple train/validation structure:
+
+```
+data/procedural/
+  train/
+  val/
+  metadata.json
+  dataset_stats.json
+```
+
+| Split | Count |
+| --- | --- |
+| Train | 1000 |
+| Validation | 200 |
+
+## Dataset preview
+
+I also generate preview images so I can inspect the dataset without opening raw arrays.
+
+![Preview grid of procedural 3D dataset slices](https://antash.dev/blog/tiny3d-latent/preview-grid.png)
+
+A preview grid of generated shapes. Each panel is one middle slice through a 3D voxel grid, not a full 3D render.
+
+## A useful confusion: why a torus did not look like a torus
+
+One preview label said `green medium wide torus`, but the image looked like two green blobs. At first that seemed like a bug. It turned out to be a visualization lesson.
+
+The dataset stores a 3D torus. The preview shows only one 2D slice through it. A rotated torus can be sliced in a way that intersects only two small parts of the ring.
+
+```
+3D torus:
+  full donut shape
+
+single 2D slice:
+  two separate pieces
+```
+
+![Three slices through a rotated torus](https://antash.dev/blog/tiny3d-latent/example-slices.png)
+
+Three different middle slices through a rotated torus. The object is valid in 3D, but any one slice can be misleading.
+
+That was a good early reminder: if I inspect 3D data with weak visualizations, correct geometry can look wrong. In a later milestone I will move toward mesh extraction and better 3D previews.
+
+## Current limits
+
+- The dataset does not contain real objects like cups or chairs yet.
+- `metallic` and `matte` are currently labels only; they do not yet change geometry or create material channels.
+- The previews are 2D slices, not true mesh renders.
+- The data is synthetic and much cleaner than a real mesh dataset.
+
+## What comes next
+
+The next milestone is to turn these voxel grids into actual mesh assets:
+
+```
+occupancy grid
+  -> marching cubes
+  -> mesh
+  -> preview render
+```
+
+That will make the 3D nature of the data much easier to inspect and will set up the later model stages, where the system starts learning and generating shapes rather than just constructing them procedurally.
+
+---
+
+# Finetuning Qwen STT Model for Hindi Language
+
+2026-02-16 by Antash Mishra. 5 min read. Tags: AI/ML, STT, LoRA, Fine-tuning, Python.
+Original: https://antash.dev/blog/finetuning-qwen-stt
+
+> Fine-tuning Qwen 0.6B with LoRA on 5 hours of Hindi speech data — dropping WER from 31% to 24.67% while keeping sub-250ms latency for Vaani.
+
+## Why I did this
+
+I am building a voicebot with open-source speech-to-text.
+
+The base model latency was already very good for real-time use (around **250 ms**), but quality was not good enough. So the goal was simple: keep speed, improve transcription quality.
+
+## Why I chose PEFT (LoRA)
+
+Full fine-tuning was possible in the original codebase, but not practical for larger runs on my hardware:
+- **24 GB VRAM**
+- **64 GB RAM**
+
+Also, full fine-tuning is usually more data-hungry. I did not have enough compute + large high-quality data to do that at scale.
+
+So I used parameter-efficient (PEFT) / preferential fine-tuning (LoRA-style) to get the best quality-to-compute tradeoff.
+
+## What data preparation I did
+
+I kept data preparation simple and practical:
+- Used the [IndicVoices](https://huggingface.co/datasets/ai4bharat/IndicVoices) dataset as the primary source and built a modified ~5-hour training set.
+- Used cleaner transcript text whenever available.
+- Filtered unusable samples (bad text, weak language quality, problematic durations).
+- Standardized audio format for training consistency.
+- Kept evaluation on a fixed Hindi benchmark set (4,740 samples) so every run was comparable.
+
+I also tested extra data strategies:
+- Expanded to ~10 hours of training data.
+- Tried balancing with more short utterances.
+
+These extra data strategies did not improve final WER over the best 5-hour setup.
+
+## What I changed
+
+The key jump came from proper fine-tuning settings:
+- LoRA rank `r=64`
+- LoRA alpha `128`
+- LoRA dropout `0.1`
+- Learning rate `1e-4`
+- 3 epochs
+
+This moved the model from a weak baseline to a much better Hindi ASR system.
+
+## Short journey
+
+1. Base model gave **31.17% WER**.
+2. Optimized LoRA fine-tuning on ~5 hours brought it to **24.75% WER**.
+3. Re-evaluation with a stricter/reproducible pipeline gave **24.67% WER** (best verified).
+4. I tested more ideas (more data, short-utterance balancing, decoding constraints, lower learning-rate sweeps), but none beat 24.67%.
+
+## Other methods I tried (and what I learned)
+
+- **Punctuation-added transcripts (GPT-based preprocessing):** I trained a model with punctuated text, but it performed worse (**28.67% WER**). So punctuation insertion was not a useful training boost here.
+- **QLoRA + cleaned/augmented data:** This also regressed (**28.38% WER**), so memory-efficient quantized training was not enough by itself for better quality.
+- **More data (5hr -> 10hr):** I expected improvement, but results were slightly worse (**24.85%-24.99% WER**) than the 5hr best.
+- **Short-utterance balancing:** I increased short samples to help voicebot-style inputs, but short-audio errors still increased overall.
+- **Decode-only constraints:** Short prompts and length caps did not improve final benchmark WER.
+
+Main takeaway from these experiments: stable 5hr LoRA tuning with strong hyperparameters worked better than adding complexity.
+
+## Benchmark vs other STT systems
+
+All numbers below are on the same Hindi benchmark set (4,740 samples).
+
+| System | WER | CER |
+|---|---:|---:|
+| Sarvam Saaras v3 | **17.12%** | 8.82% |
+| **My best fine-tuned open-source model (Qwen 0.6B + LoRA)** | **24.67%** | 12.43% |
+| Azure Speech | 29.22% | 20.06% |
+| Qwen3-ASR-0.6B Base | 31.17% | 18.57% |
+| Whisper Large v3 | 44.58% | 28.73% |
+| Whisper Medium | 113.53% | 101.59% |
+
+## Final takeaway
+
+For my voicebot use case, the best balance so far is:
+- low latency from the base architecture
+- big quality gain from targeted LoRA fine-tuning
+- final verified score: **24.67% WER**
