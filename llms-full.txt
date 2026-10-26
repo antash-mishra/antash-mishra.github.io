@@ -155,7 +155,7 @@ A launcher for Linux. Press a shortcut, type a few letters, and open any app, se
 
 Released 14 October 2026Version 0.1.6Written in CUbuntu, Mint, Fedora, Arch and more
 
-P100Torchlight9.4msSat 24 Oct 11:54/58
+P100Torchlight5.1msMon 26 Oct 05:51/14
 
 __Apps1
 
