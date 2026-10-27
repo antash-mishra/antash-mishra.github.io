@@ -1,4 +1,4 @@
-import{j as Z,r as Ie,g as Qv}from"./index-B0HDzzy8.js";const P0=({children:s})=>Z.jsx("div",{className:"not-prose my-6 border-l-4 border-ind-accent bg-ind-surface-alt p-4 text-sm leading-relaxed text-ind-text-dim",children:s}),ld=({children:s})=>Z.jsx("pre",{className:"not-prose my-5 overflow-x-auto border border-white/10 bg-black px-4 py-3 text-[13px] leading-6 text-neutral-200",children:Z.jsx("code",{className:"font-mono",children:s})});/**
+import{j as Z,r as Ie,g as Qv}from"./index-CNkPS8dN.js";const P0=({children:s})=>Z.jsx("div",{className:"not-prose my-6 border-l-4 border-ind-accent bg-ind-surface-alt p-4 text-sm leading-relaxed text-ind-text-dim",children:s}),ld=({children:s})=>Z.jsx("pre",{className:"not-prose my-5 overflow-x-auto border border-white/10 bg-black px-4 py-3 text-[13px] leading-6 text-neutral-200",children:Z.jsx("code",{className:"font-mono",children:s})});/**
  * @license
  * Copyright 2010-2023 Three.js Authors
  * SPDX-License-Identifier: MIT
